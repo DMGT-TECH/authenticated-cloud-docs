@@ -5,9 +5,13 @@ on:
     branches: [ main ]
 
 
+jobs:
   deploy:
     needs: ["build"]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./authenticated-cloud-docs/
     container: jch254/docker-node-serverless
     steps:
     - name: Obtain latest git for Alpine (before checkout)
