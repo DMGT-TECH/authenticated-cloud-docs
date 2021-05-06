@@ -15,6 +15,7 @@ jobs:
     steps:
     - name: Obtain latest git for Alpine (before checkout)
       run: apk add git zip --update-cache
+      working-directory: ./
     - uses: actions/checkout@v2
     - name: Install git and update/init submodules
       run: git submodule update --init
