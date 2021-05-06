@@ -1,0 +1,61 @@
+name: Deploy and Secure Static Website
+
+on:
+  pull_request:
+    branches: [ main ]
+
+
+  deploy:
+    needs: ["build"]
+    runs-on: ubuntu-latest
+    container: jch254/docker-node-serverless
+    steps:
+    - name: Obtain latest git for Alpine (before checkout)
+      run: apk add git zip --update-cache
+    - uses: actions/checkout@v2
+    - name: Install git and update/init submodules
+      run: git submodule update --init
+
+    - name: Install docusaurus
+      run: |
+        cd ./deployment
+        npx @docusaurus/init@latest init tmp classic
+    - name: Configure and build docusaurus site
+      run: |
+        cd ./deployment
+        cp ../config/docusaurus/docusaurus.config.js ./tmp
+        rm ./src/pages/index.js  # Remove alternate index
+        rm -rf docs; cp -r ../../docs ./docs
+        npm run build
+    - name: "Configure AWS Credentials"
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-2
+    - name: Patch cloudfront-auth to allow non-interative (CLI) use
+      run: |
+        cd ./deployment/cloudfront-auth
+        sed -i"" "s/^prompt.start/prompt.override=require('minimist')(process.argv.slice(2), opts={boolean:true, string:['method', 'AUTHZ']});prompt.start/" build/build.js
+    - name: Install id_rsa key (from manual run of cloudfront-auth)
+      run: |
+        source .env
+        cd ./deployment/cloudfront-auth
+        mkdir -p distributions/$AAD_SSO__RESULT_NAME/
+        echo "${{ secrets.AAD_SSO__ID_RSA }}" > distributions/$AAD_SSO__RESULT_NAME/id_rsa
+        echo "${{ secrets.AAD_SSO__ID_RSA_PUB }}" > distributions/$AAD_SSO__RESULT_NAME/id_rsa.pub
+    - name: Run cloudfront-auth to generate AWS CloudFront Lambda@Edge function (Microsoft Azure AD)
+      run: |
+        source .env
+        cd ./deployment/cloudfront-auth
+        npm run-script build -- --SESSION_DURATION=$AAD_SSO__SESSION_DURATION --method=2 --AUTHZ=1 --distribution=$AAD_SSO__RESULT_NAME --trailing_slash_redirects_enabled --simple_urls_enabled --TENANT=$AAD_SSO__TENANT --CLIENT_ID=$AAD_SSO__CLIENT_ID --CLIENT_SECRET=${{ secrets.AAD_SSO__CLIENT_SECRET }} --REDIRECT_URI=$AAD_SSO__REDIRECT_URI
+    - name: Copy AAD SSO function zip to deployment and remove tool
+      run: |
+        source .env
+        cd ./deployment/
+        cp cloudfront-auth/distributions/$AAD_SSO__RESULT_NAME/$AAD_SSO__RESULT_NAME.zip resources/lambda/
+    - name: Build the CDK App
+      run: cd deployment; npm i && npm run build
+    - name: Deploy the CDK App
+      run: cd deployment; npm run cdk deploy -- --require-approval never
+

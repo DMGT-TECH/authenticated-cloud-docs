@@ -57,7 +57,7 @@ export class MyStaticWebsite extends Construct {
 
     const authLambda = new lambda.Function(this as any, 'AuthHandler', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset("resources/lambda/autheddocssite-sso-aad.zip"),
+      code: lambda.Code.fromAsset("resources/lambda/authdocssite-sso-aad.zip"),
       handler: "index.handler",
       role: new iam.Role(this as any, 'AllowLambdaServiceToAssumeRole', {
         assumedBy: new iam.CompositePrincipal(
