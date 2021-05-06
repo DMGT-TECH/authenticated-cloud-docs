@@ -19,4 +19,4 @@ export class MyStaticSiteStack extends cdk.Stack {
 }
 
 const app = new cdk.App();
-new MyStaticSiteStack(app, 'autheddoctestStaticSite-dev', { env: { region: 'us-east-1', account: '787198526106' } }, 'local-dev');
+new MyStaticSiteStack(app, 'autheddoctestStaticSite-dev', { env: { region: 'us-east-1', account: '787198526106' } }, 'dev');
