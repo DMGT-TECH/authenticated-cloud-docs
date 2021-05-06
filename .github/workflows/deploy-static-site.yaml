@@ -28,6 +28,7 @@ jobs:
       run: |
         cd ./deployment
         cp ../config/docusaurus/docusaurus.config.js ./tmp
+        cd ./tmp
         rm ./src/pages/index.js  # Remove alternate index
         rm -rf docs; cp -r ../../docs ./docs
         npm run build
