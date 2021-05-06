@@ -11,7 +11,7 @@ export class MyStaticSiteStack extends cdk.Stack {
     Tags.of(this).add('environment', env);
     Tags.of(this).add('product-owner', 'rob.chandhok@dmgt.com');
 
-    new LinkMonsterStaticWebSite(this, id, {
+    new MyStaticWebSite(this, id, {
       domainName: this.node.tryGetContext('domain'),
       siteSubDomain: `${env}.authdoctest`,
     });
@@ -19,4 +19,4 @@ export class MyStaticSiteStack extends cdk.Stack {
 }
 
 const app = new cdk.App();
-new LinkMonsterStaticSiteStack(app, 'authdoctestStaticSite-dev', { env: { region: 'us-east-1', account: '787198526106' } }, 'local-dev');
+new MyStaticSiteStack(app, 'authdoctestStaticSite-dev', { env: { region: 'us-east-1', account: '787198526106' } }, 'local-dev');
