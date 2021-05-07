@@ -67,6 +67,8 @@ jobs:
         source .env
         cd ./deployment
         cat cdk.json.template | envsubst > cdk.json
+        cat cdk.json
         cat cdk.context.json.template | envsubst > cdk.context.json
+        cat cdk.context.json
         npm run cdk deploy -- --require-approval never
 
