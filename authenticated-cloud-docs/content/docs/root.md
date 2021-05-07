@@ -1,8 +1,8 @@
 ---
-id: my-home-doc
+id: Welcome
 slug: /
 ---
-Lorem ipsum
-Copy
 
-For details visit [the details page](./detail)
+This is an example of site published using our authenticated cloud documents code.
+
+For detailed examples visit [the details page](./detail)
