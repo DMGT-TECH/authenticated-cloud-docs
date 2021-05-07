@@ -1,32 +1,32 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
+  title: 'Authenticated Cloud Documents',
+  tagline: 'Securing your docs',
+  url: 'https://dev.authdocstest.ml.labs.dmgt.com',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'dmgt-tech', // Usually your GitHub org/user name.
+  projectName: 'authenticated-cloud-docs', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'My Site',
+      title: 'Authenticated Cloud Documents',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'DMGT Logo',
         src: 'img/logo.svg',
       },
       items: [
         {
           type: 'doc',
-          docId: 'intro',
+          docId: 'detail',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Example Details',
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
+          href: 'https://github.com/DMGT-TECH/authenticated-cloud-docs',
+          label: 'Get Code',
           position: 'right',
         },
       ],
@@ -38,25 +38,25 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'Home',
+              to: '/',
+            },
+            {
+              label: 'Details',
+              to: '/detail',
             },
           ],
         },
         {
-          title: 'Community',
+          title: 'Resources',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'DMGT.com',
+              href: 'https://www.dmgt.com',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              label: 'Code Repository',
+              href: 'https://github.com/DMGT-TECH/authenticated-cloud-docs',
             },
           ],
         },
@@ -64,17 +64,17 @@ module.exports = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
+              label: 'Github Actions',
+              to: 'https://github.com/features/actions',
             },
             {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              label: 'NodeJS',
+              href: 'https://nodejs.org',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} DMGT, plc.`,
     },
   },
   presets: [
@@ -86,7 +86,7 @@ module.exports = {
           routeBasePath: '/',
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/DMGT-TECH/authenticated-cloud-docs/edit/main/authenticated-cloud-docs/docs/',
         },
         blog: {
           showReadingTime: true,

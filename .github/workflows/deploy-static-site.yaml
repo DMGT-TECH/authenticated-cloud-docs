@@ -35,8 +35,8 @@ jobs:
         cd ./deployment
         cp ../config/docusaurus/docusaurus.config.js ./tmp
         cd ./tmp
-        rm ./src/pages/index.js  # Remove alternate index
-        rm -rf docs; cp -r ../../docs ./docs
+        rm -rf docs src static  # Remove default content including conflicting ./src/pages/index.js
+        cp -r ../../content/* .  # Get docs, src, and static from our content directory
         npm run build
     - name: "Configure AWS Credentials"
       uses: aws-actions/configure-aws-credentials@v1
