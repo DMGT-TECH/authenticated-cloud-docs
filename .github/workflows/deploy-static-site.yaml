@@ -44,19 +44,19 @@ jobs:
         sed -i"" "s/^prompt.start/prompt.override=require('minimist')(process.argv.slice(2), opts={boolean:true, string:['method', 'AUTHZ']});prompt.start/" build/build.js
     - name: Install id_rsa key (from manual run of cloudfront-auth)
       run: |
-        source .env
+        set -a; source .env; set +a
         cd ./deployment/cloudfront-auth
         mkdir -p distributions/$AAD_SSO__RESULT_NAME/
         echo "${{ secrets.AAD_SSO__ID_RSA }}" > distributions/$AAD_SSO__RESULT_NAME/id_rsa
         echo "${{ secrets.AAD_SSO__ID_RSA_PUB }}" > distributions/$AAD_SSO__RESULT_NAME/id_rsa.pub
     - name: Run cloudfront-auth to generate AWS CloudFront Lambda@Edge function (Microsoft Azure AD)
       run: |
-        source .env
+        set -a; source .env; set +a
         cd ./deployment/cloudfront-auth
         npm run-script build -- --SESSION_DURATION=$AAD_SSO__SESSION_DURATION --method=2 --AUTHZ=1 --distribution=$AAD_SSO__RESULT_NAME --trailing_slash_redirects_enabled --simple_urls_enabled --TENANT=$AAD_SSO__TENANT --CLIENT_ID=$AAD_SSO__CLIENT_ID --CLIENT_SECRET=${{ secrets.AAD_SSO__CLIENT_SECRET }} --REDIRECT_URI=$AAD_SSO__REDIRECT_URI
     - name: Copy AAD SSO function zip to deployment and remove tool
       run: |
-        source .env
+        set -a; source .env; set +a
         cd ./deployment/
         mkdir -p resources/lambda/
         cp cloudfront-auth/distributions/$AAD_SSO__RESULT_NAME/$AAD_SSO__RESULT_NAME.zip resources/lambda/
@@ -64,7 +64,7 @@ jobs:
       run: cd deployment; npm i && npm run build
     - name: Substitute .env vars into CDK configuration and deploy the CDK App
       run: |
-        source .env
+        set -a; source .env; set +a
         cd ./deployment
         cat cdk.json.template | envsubst > cdk.json
         cat cdk.json
