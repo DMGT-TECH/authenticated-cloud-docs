@@ -5,10 +5,10 @@ A repository that deploys documents to the cloud for secured access via Azure Ac
 ## How to use
 
 1. Clone this repo, choose a domain name for your site.
-1. Set up Active Directory for your new site
-  1. Register a new application. Note Application (client) id and Directory (tenant) id.
-  1. Add a web client to the application. Note client id, client secret.
-  1. Add a redirect URI of `$domain/_callback`
+1. Set up Active Directory for your new site.
+    1. Register a new application. Note `Application (client) id` and `Directory (tenant) id`.
+    1. Add a web client to the application. Note `Client id` and `Client secret`.
+    1. To the web client, add a redirect URI of your domain with `/_callback` at the end.
 1. Edit the configuration in `.env` and `config/docusaurus.config.json` (you'll need to set your AWS/Route53 information there too.)
 1. Set the required secrets in Github Secrets (see below).
 1. Place your content in the `content` folder
