@@ -1,0 +1,3 @@
+[submodule "authenticated-cloud-docs/deployment/cloudfront-auth"]
+	path = authenticated-cloud-docs/deployment/cloudfront-auth
+	url = https://github.com/Widen/cloudfront-auth
