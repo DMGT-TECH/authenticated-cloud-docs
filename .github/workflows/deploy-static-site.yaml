@@ -62,6 +62,11 @@ jobs:
         cp cloudfront-auth/distributions/$AAD_SSO__RESULT_NAME/$AAD_SSO__RESULT_NAME.zip resources/lambda/
     - name: Build the CDK App
       run: cd deployment; npm i && npm run build
-    - name: Deploy the CDK App
-      run: cd deployment; npm run cdk deploy -- --require-approval never
+    - name: Substitute .env vars into CDK configuration and deploy the CDK App
+      run: |
+        source .env
+        cd ./deployment
+        cat cdk.json | envsubst > cdk.json.substituted ; mv cdk.json.substituted cdk.json
+        cat cdk.context.json | envsubst > cdk.context.json.substituted ; mv cdk.context.json.substituted cdk.context.json
+        npm run cdk deploy -- --require-approval never
 

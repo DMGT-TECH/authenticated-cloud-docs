@@ -1,6 +1,6 @@
 {
   "app": "node build/index",
   "context": {
-    "domain": "ml.labs.dmgt.com"
+    "domain": "$AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_BASEDOMAIN"
   }
 }
