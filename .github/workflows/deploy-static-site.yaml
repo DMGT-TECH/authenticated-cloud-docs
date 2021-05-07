@@ -14,12 +14,12 @@ jobs:
     container: jch254/docker-node-serverless
     steps:
     - name: Obtain latest git for Alpine and other requirements (before checkout)
-      run: apk add git zip gettext --update-cache
+      run: apk add git zip --update-cache
       working-directory: ./
     - uses: actions/checkout@v2
     - name: Install git and update/init submodules
       run: git submodule update --init
-    - name: Import environment variables from a file
+    - name: Import environment variables from .env
       id: import-env
       shell: bash
       run: |
