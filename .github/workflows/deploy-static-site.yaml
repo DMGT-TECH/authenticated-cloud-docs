@@ -19,8 +19,13 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install git and update/init submodules
       run: git submodule update --init
-    - name: Load environment variables from .env
-      run: set -a; source .env; set +a
+    - name: Import environment variables from a file
+      id: import-env
+      shell: bash
+      run: |
+        while read line; do
+          echo "$line" >> $GITHUB_ENV
+        done < .env
     - name: Install docusaurus
       run: |
         cd ./deployment
