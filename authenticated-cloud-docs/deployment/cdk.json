@@ -1,6 +1,0 @@
-{
-  "app": "node build/index",
-  "context": {
-    "domain": "ml.labs.dmgt.com"
-  }
-}

@@ -1,0 +1,6 @@
+{
+  "app": "node build/index",
+  "context": {
+    "domain": "$AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_BASEDOMAIN"
+  }
+}
