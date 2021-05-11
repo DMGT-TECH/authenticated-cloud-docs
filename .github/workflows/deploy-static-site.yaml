@@ -1,7 +1,7 @@
 name: Deploy and Secure Static Website
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
 
 
