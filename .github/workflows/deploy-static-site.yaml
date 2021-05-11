@@ -3,6 +3,8 @@ name: Deploy and Secure Static Website
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 
 jobs:
@@ -68,6 +70,8 @@ jobs:
     - name: Substitute .env vars into CDK configuration and deploy the CDK App
       run: |
         cd ./deployment
+        export PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+        echo "Pull request number is $PULL_NUMBER"
         cat cdk.json.template | envsubst > cdk.json
         cat cdk.json
         cat cdk.context.json.template | envsubst > cdk.context.json
