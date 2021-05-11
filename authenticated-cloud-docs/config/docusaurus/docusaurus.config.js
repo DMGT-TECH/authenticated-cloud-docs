@@ -86,7 +86,7 @@ module.exports = {
           routeBasePath: '/',
           // Please change this to your repo.
           editUrl:
-            'https://github.com/DMGT-TECH/authenticated-cloud-docs/edit/main/authenticated-cloud-docs/',
+            'https://github.com/DMGT-TECH/authenticated-cloud-docs/edit/main/authenticated-cloud-docs/content/',
         },
         blog: {
           showReadingTime: true,
