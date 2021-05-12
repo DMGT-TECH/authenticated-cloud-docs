@@ -16,7 +16,7 @@ jobs:
     container: jch254/docker-node-serverless
     steps:
     - name: Obtain latest git for Alpine and other requirements (before checkout)
-      run: apk add git zip gettext --update-cache
+      run: apk add git zip gettext jq --update-cache
       working-directory: ./
     - uses: actions/checkout@v2
     - name: Install git and update/init submodules
@@ -72,9 +72,10 @@ jobs:
         cd ./deployment
         export PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
         echo "Pull request number is $PULL_NUMBER"
+        echo "(Pull request should be visible above)"
         cat cdk.json.template | envsubst > cdk.json
         cat cdk.json
         cat cdk.context.json.template | envsubst > cdk.context.json
         cat cdk.context.json
-        npm run cdk deploy -- --require-approval never
+        #npm run cdk deploy -- --require-approval never
 
