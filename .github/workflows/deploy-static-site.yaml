@@ -28,11 +28,6 @@ jobs:
         while read line; do
           echo "$line" >> $GITHUB_ENV
         done < .env
-    - name: Test we can get PR number
-      run: |
-        export PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-        echo "Pull request number is $PULL_NUMBER"
-        echo "(Pull request should be visible above)"
     - name: Install docusaurus
       run: |
         cd ./deployment
