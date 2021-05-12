@@ -1,6 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import { MyStaticWebsite } from './lib/s3/myStaticWebsite';
 import { Tags } from '@aws-cdk/core';
+import * as fs from 'fs';
 
 export class MyStaticWebsiteStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: cdk.StackProps, env: string) {
