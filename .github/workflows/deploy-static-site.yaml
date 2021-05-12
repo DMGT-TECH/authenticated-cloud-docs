@@ -3,9 +3,6 @@ name: Deploy and Secure Static Website
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
 
 jobs:
   deploy:
