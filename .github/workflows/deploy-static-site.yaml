@@ -93,7 +93,7 @@ jobs:
         cd ./deployment
         curl \
           -X POST \
-          $URL \
+          ${{ github.event.pull_request.comments_url }} \
           -H "Content-Type: application/json" \
           -H "Authorization: token $GITHUB_TOKEN" \
           --data '{ "body": "The site has been deployed to https://'`cat published_domain_name.txt`'" }'
