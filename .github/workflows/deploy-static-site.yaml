@@ -51,14 +51,14 @@ jobs:
       id: secrets_check
       run: echo '::set-output name=found_secret::${{secrets.AAD_SSO__ID_RSA}}'
     - name: Install provided id_rsa key (from manual run of cloudfront-auth)
-      if: ${{ contains(steps.secrets_check.outputs.found_secret, "KEY") }}
+      if: ${{ contains(steps.secrets_check.outputs.found_secret, 'KEY') }}
       run: |
         cd ./deployment/cloudfront-auth
         mkdir -p distributions/$AAD_SSO__RESULT_NAME/
         echo "${{ secrets.AAD_SSO__ID_RSA }}" > distributions/$AAD_SSO__RESULT_NAME/id_rsa
         echo "${{ secrets.AAD_SSO__ID_RSA_PUB }}" > distributions/$AAD_SSO__RESULT_NAME/id_rsa.pub
     - name: Did not find id_rsa keys in secret to install (cloudfront-auth will generate one)
-      if: ${{ !contains(steps.secrets_check.outputs.found_secret, "KEY") }}
+      if: ${{ !contains(steps.secrets_check.outputs.found_secret, 'KEY') }}
       run: echo "Not creating id_rsa and id_rsa.pub from secrets, as they're not set"
     - name: Run cloudfront-auth to generate AWS CloudFront Lambda@Edge function (Microsoft Azure AD)
       run: |
