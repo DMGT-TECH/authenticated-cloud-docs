@@ -52,12 +52,16 @@ jobs:
       run: |
         cd ./deployment/cloudfront-auth
         sed -i"" "s/^prompt.start/prompt.override=require('minimist')(process.argv.slice(2), opts={boolean:true, string:['method', 'AUTHZ']});prompt.start/" build/build.js
-    - name: Install id_rsa key (from manual run of cloudfront-auth)
+    - name: Install provided id_rsa key (from manual run of cloudfront-auth)
+      if: ${{ contains(secrets.AAD_SSO__ID_RSA, "KEY") }}
       run: |
         cd ./deployment/cloudfront-auth
         mkdir -p distributions/$AAD_SSO__RESULT_NAME/
         echo "${{ secrets.AAD_SSO__ID_RSA }}" > distributions/$AAD_SSO__RESULT_NAME/id_rsa
         echo "${{ secrets.AAD_SSO__ID_RSA_PUB }}" > distributions/$AAD_SSO__RESULT_NAME/id_rsa.pub
+    - name: Did not find id_rsa keys in secret to install (cloudfront-auth will generate one)
+      if: ${{ contains(secrets.AAD_SSO__ID_RSA, "KEY") }}
+      run: echo "Not creating id_rsa and id_rsa.pub from secrets, as they're not set"
     - name: Run cloudfront-auth to generate AWS CloudFront Lambda@Edge function (Microsoft Azure AD)
       run: |
         cd ./deployment/cloudfront-auth
