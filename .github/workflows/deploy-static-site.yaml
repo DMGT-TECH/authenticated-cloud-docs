@@ -90,10 +90,11 @@ jobs:
         URL: ${{ github.event.issue.comments_url }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        cd ./deployment
         curl \
           -X POST \
           $URL \
           -H "Content-Type: application/json" \
           -H "Authorization: token $GITHUB_TOKEN" \
-          --data '{ "body": "The site has been deployed to '`cat published_domain_name.txt`'" }'
+          --data '{ "body": "The site has been deployed to https://'`cat published_domain_name.txt`'" }'
 
