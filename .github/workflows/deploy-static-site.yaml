@@ -1,7 +1,7 @@
 name: Deploy and Secure Static Website
 
 on:
-  push:
+  [push, pull_request]:
     branches: [ main ]
 
 jobs:
@@ -82,4 +82,5 @@ jobs:
         cat cdk.context.json.template | envsubst > cdk.context.json
         cat cdk.context.json
         npm run cdk deploy -- --require-approval never
+        echo "Published to: `cat published_domain_name.txt`"
 
