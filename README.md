@@ -1,6 +1,10 @@
 # authenticated-cloud-docs
-A repository that deploys documents to the cloud for secured access via Azure Active Directory
+A repository that deploys documents to the cloud for secured access via Azure Active Directory.
 
+## Prerequisites
+
+* Azure: Ability to register and configure an Azure Active Directoy application.
+* AWS: Control over a hosted zone in Route53, ability to create S3 buckets (AWS access key and secret).
 
 ## How to use
 
@@ -17,13 +21,15 @@ Push everything, including `./.github/workflows/` and your site will be set up a
 
 ## Rendering locally
 
-1. If you install docusaurus locally, copy the directories from ./content/ into your docusaurus prior to running `npm run start`.
+1. If you install docusaurus locally, copy the directories from ./content/ into your docusaurus prior to running `npm run start`.  (Overwrite the directories in your docusaurus installation.)
 
 ## Configuration
 
 The intent is for all non-secret configuration information, like the base domain/hosted zone information, to be specified in the top level .env file.
 
-## Required Secrets
+See the .env file for configurable settings.
+
+### Required Secrets
 
 * `AWS_ACCESS_KEY_ID`
 * `AWS_SECRET_ACCESS_KEY`
@@ -35,3 +41,8 @@ The following two secrets should be specified if you want to prevent the `cloudf
 * `AAD_SSO__ID_RSA_PUB`
 
 You can generate these keys by running the last steps of the workflow locally on your station (`npm run cdk deploy -- --require-approval never`).
+
+## Alternative Authentication / Identity Providers
+
+The `cloudfront-auth` library supports multiple providers aside from Azure Active Directory, e.g., Auth0.  The parameters passed in from the Github Action can be altered to use those providers instead.
+
