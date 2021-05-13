@@ -29,8 +29,9 @@ The intent is for all non-secret configuration information, like the base domain
 * `AWS_SECRET_ACCESS_KEY`
 * `AAD_SSO__CLIENT_SECRET`
 
-The following two secrets should be specified if you want to prevent the cloudfront-auth tool from generating new keys on each update:
+The following two secrets should be specified if you want to prevent the `cloudfront-auth` tool from generating new keys on each update:
 
 * `AAD_SSO__ID_RSA`
 * `AAD_SSO__ID_RSA_PUB`
 
+You can generate these keys by running the last steps of the workflow locally on your station (`npm run cdk deploy -- --require-approval never`).
