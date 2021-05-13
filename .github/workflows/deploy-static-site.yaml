@@ -79,5 +79,5 @@ jobs:
         cat cdk.json
         cat cdk.context.json.template | envsubst > cdk.context.json
         cat cdk.context.json
-        #npm run cdk deploy -- --require-approval never
+        npm run cdk deploy -- --require-approval never
 
