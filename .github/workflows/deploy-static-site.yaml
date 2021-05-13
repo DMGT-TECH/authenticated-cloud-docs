@@ -27,6 +27,7 @@ jobs:
         while read line; do
           echo "$line" >> $GITHUB_ENV
         done < .env
+        echo 'PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")' >> $GITHUB_ENV
     - name: Install docusaurus
       run: |
         cd ./deployment
@@ -76,7 +77,6 @@ jobs:
     - name: Substitute .env vars into CDK configuration and deploy the CDK App
       run: |
         cd ./deployment
-        export PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
         echo "Pull request number is $PULL_NUMBER"
         echo "(Pull request should be visible above or 'null' if we're not in a pull request)"
         cat cdk.json.template | envsubst > cdk.json
@@ -85,4 +85,15 @@ jobs:
         cat cdk.context.json
         npm run cdk deploy -- --require-approval never
         echo "Published to: `cat published_domain_name.txt`"
+    - name: Comment on the PR with the full published domain
+      env:
+        URL: ${{ github.event.issue.comments_url }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        curl \
+          -X POST \
+          $URL \
+          -H "Content-Type: application/json" \
+          -H "Authorization: token $GITHUB_TOKEN" \
+          --data '{ "body": "The site has been deployed to '`cat published_domain_name.txt`'" }'
 
