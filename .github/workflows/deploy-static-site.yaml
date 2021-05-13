@@ -25,11 +25,6 @@ jobs:
         while read line; do
           echo "$line" >> $GITHUB_ENV
         done < .env
-    - name: Test we can get PR number
-      run: |
-        export PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-        echo "Pull request number is $PULL_NUMBER"
-        echo "(Pull request should be visible above)"
     - name: Install docusaurus
       run: |
         cd ./deployment
@@ -52,15 +47,18 @@ jobs:
       run: |
         cd ./deployment/cloudfront-auth
         sed -i"" "s/^prompt.start/prompt.override=require('minimist')(process.argv.slice(2), opts={boolean:true, string:['method', 'AUTHZ']});prompt.start/" build/build.js
+    - name: Check if private/public keys are set in secrets.
+      id: secrets_check
+      run: echo '::set-output name=found_secret::${{secrets.AAD_SSO__ID_RSA}}'
     - name: Install provided id_rsa key (from manual run of cloudfront-auth)
-      if: ${{ contains(secrets.AAD_SSO__ID_RSA, "KEY") }}
+      if: ${{ contains(steps.secrets_check.outputs.found_secret, "KEY") }}
       run: |
         cd ./deployment/cloudfront-auth
         mkdir -p distributions/$AAD_SSO__RESULT_NAME/
         echo "${{ secrets.AAD_SSO__ID_RSA }}" > distributions/$AAD_SSO__RESULT_NAME/id_rsa
         echo "${{ secrets.AAD_SSO__ID_RSA_PUB }}" > distributions/$AAD_SSO__RESULT_NAME/id_rsa.pub
     - name: Did not find id_rsa keys in secret to install (cloudfront-auth will generate one)
-      if: ${{ contains(secrets.AAD_SSO__ID_RSA, "KEY") }}
+      if: ${{ !contains(steps.secrets_check.outputs.found_secret, "KEY") }}
       run: echo "Not creating id_rsa and id_rsa.pub from secrets, as they're not set"
     - name: Run cloudfront-auth to generate AWS CloudFront Lambda@Edge function (Microsoft Azure AD)
       run: |
@@ -78,7 +76,7 @@ jobs:
         cd ./deployment
         export PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
         echo "Pull request number is $PULL_NUMBER"
-        echo "(Pull request should be visible above)"
+        echo "(Pull request should be visible above or 'null' if we're not in a pull request)"
         cat cdk.json.template | envsubst > cdk.json
         cat cdk.json
         cat cdk.context.json.template | envsubst > cdk.context.json
