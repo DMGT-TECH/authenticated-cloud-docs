@@ -28,6 +28,7 @@ jobs:
         done < "$input"
     
     - name: Check the CF statck status
+      id: cfStatus
       env:
         ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -40,11 +41,11 @@ jobs:
         echo "AWS_REGION=us-east-1" >> .env
         echo "CF_STACK_NAME=${{ env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN }}-dev"
         npm install
-        npm start >> $GITHUB_ENV
+        npm start >> $steps.cfStatus.outputs.CF_STATUS
   
   job_2: 
     name: Build and deploy the site
-    if: ${{ env.CF_STATUS == 'CREATE_COMPLETE' }}
+    if: ${{ steps.cfStatus.outputs.CF_STATUS == 'CREATE_COMPLETE' }}
     runs-on: ubuntu-latest
     defaults:
       run:
