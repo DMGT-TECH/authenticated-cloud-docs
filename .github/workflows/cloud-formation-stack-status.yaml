@@ -44,7 +44,7 @@ jobs:
         npm start >> $steps.cfStatus.outputs.CF_STATUS
   
   job_2: 
-    name: Build and deploy the site
+    name: Build and deploy the site dev
     if: ${{ steps.cfStatus.outputs.CF_STATUS == 'CREATE_COMPLETE' }}
     runs-on: ubuntu-latest
     defaults:
