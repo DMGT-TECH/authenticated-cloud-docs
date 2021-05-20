@@ -18,6 +18,7 @@ jobs:
     - name: Import environment variables from .env
       id: import-env
       run: |
+      pwd & ls -a
         cd ./deployment
         while read line; do
           echo "$line" >> $GITHUB_ENV
