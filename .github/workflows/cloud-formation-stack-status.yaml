@@ -8,6 +8,9 @@ jobs:
   job_1: 
     name: Check the current status of the cloud formation stack
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./authenticated-cloud-docs/
     strategy:
       matrix: 
         node-version: [12.x]
@@ -16,9 +19,9 @@ jobs:
       id: import-env
       shell: bash
       run: |
-        cd authenticated-cloud-docs
-        pwd && ls -a
-        echo .env
+        while read line; do
+          echo "$line" >> $GITHUB_ENV
+        done < .env
     
     - name: Check the CF statck status
       env:
@@ -26,7 +29,7 @@ jobs:
         SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: us-east-1
       run: |
-        cd ./authenticated-cloud-docs/deployment/cfStatus 
+        cd ./deployment/cfStatus 
         touch .env
         echo "ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
         echo "SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}" >> .env
