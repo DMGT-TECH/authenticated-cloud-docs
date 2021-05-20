@@ -16,10 +16,15 @@ async function run() {
       };
     cloudformation.describeStacks(params, function(err, data) {
         if (err) {
-            console.log('Error: '+ err);
+            console.log('CF_STATUS_ERROR='+ err);
         } else {
             let currentStatus = data.Stacks[0].StackStatus
-            console.log('CF_Status:'+ currentStatus)
+            if(currentStatus.includes('IN_PROGRESS'))
+            {
+                console.log('CF_STATUS=IN_PROGRESS')
+            } else{
+                console.log('CF_STATUS='+ currentStatus)
+            }   
         }
     });
 } 
