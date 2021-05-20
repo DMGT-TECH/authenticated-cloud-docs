@@ -18,9 +18,7 @@ jobs:
       run: |
         cd authenticated-cloud-docs
         pwd && ls -a
-        while read line; do
-          echo "$line" >> $GITHUB_ENV
-        done < .env
+        echo .env
     
     - name: Check the CF statck status
       env:
