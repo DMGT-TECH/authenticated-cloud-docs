@@ -45,6 +45,7 @@ jobs:
   
   job_2: 
     name: Build and deploy the site dev
+    needs: job_1
     if: ${{ steps.cfStatus.outputs.CF_STATUS == 'CREATE_COMPLETE' }}
     runs-on: ubuntu-latest
     defaults:
