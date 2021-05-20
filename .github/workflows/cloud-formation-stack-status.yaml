@@ -17,6 +17,7 @@ jobs:
     steps:
     - name: Import environment variables from .env
       id: import-env
+      shell: bash
       run: |
         pwd && ls -a
         cd ./deployment
