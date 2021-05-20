@@ -19,9 +19,14 @@ jobs:
       id: import-env
       shell: bash
       run: |
-        while read line; do
-          echo "$line" >> $GITHUB_ENV
-        done < .env
+        input=".env"
+        SUB='AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN'
+        while read -r line
+        do
+          if [[ "$line" == *"$SUB"* ]]; then
+            echo "$line"
+          fi
+        done < "$input"
     
     - name: Check the CF statck status
       env:
