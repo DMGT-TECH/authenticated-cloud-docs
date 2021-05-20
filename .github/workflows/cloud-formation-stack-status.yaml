@@ -21,7 +21,6 @@ jobs:
         while read line; do
           echo "$line" >> $GITHUB_ENV
         done < .env
-        echo 'PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")' >> $GITHUB_ENV
     
     - name: Check the CF statck status
       env:
