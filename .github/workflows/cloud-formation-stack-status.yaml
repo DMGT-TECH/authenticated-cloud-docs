@@ -41,4 +41,4 @@ jobs:
         echo "CF_STACK_NAME=${{ env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN }}-dev"
         npm install
         npm start >> output.txt
-        echo output.txt
+        cat output.txt
