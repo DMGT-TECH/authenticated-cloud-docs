@@ -8,17 +8,16 @@ jobs:
   job_1: 
     name: Check the current status of the cloud formation stack
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./authenticated-cloud-docs/
     strategy:
       matrix: 
         node-version: [12.x]
     steps:
+    - uses: actions/checkout@v2
     - name: Import environment variables from .env
-      id: import-env
       shell: bash
       run: |
+        cd authenticated-cloud-docs
+        pwd && ls -a
         input=".env"
         SUB='AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN'
         while read -r line
