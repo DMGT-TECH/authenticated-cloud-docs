@@ -11,16 +11,14 @@ jobs:
     strategy:
       matrix: 
         node-version: [12.x]
-    defaults:
-      run:
-        working-directory: ./authenticated-cloud-docs/
     steps:
     - name: Import environment variables from .env
       id: import-env
       shell: bash
       run: |
+        cd authenticated-cloud-docs
         pwd && ls -a
-        cd ./deployment
+        cd deployment
         while read line; do
           echo "$line" >> $GITHUB_ENV
         done < .env
