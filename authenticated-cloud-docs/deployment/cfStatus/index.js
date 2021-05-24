@@ -21,9 +21,9 @@ async function run() {
             let currentStatus = data.Stacks[0].StackStatus
             if(currentStatus.includes('IN_PROGRESS'))
             {
-                console.log('IN_PROGRESS')
+                console.log('CF_STATUS=IN_PROGRESS')
             } else{
-                console.log(currentStatus)
+                console.log('CF_STATUS='+ currentStatus)
             }   
         }
     });
