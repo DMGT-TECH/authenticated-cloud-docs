@@ -47,11 +47,12 @@ jobs:
         echo "CF_STACK_NAME=${{ env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN }}-dev"
         npm install
         npm start
-        echo "::set-output name=envvar::$(npm start)" 
+        echo "::set-env name=envvar::$(npm start)" 
   
   job_2: 
     name: Build and deploy the site dev
     needs: [job_1]
+    if: ${{ env.envvar != 'UPDATE_COMPLETE' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -59,7 +60,7 @@ jobs:
     container: jch254/docker-node-serverless
     steps:
     - name: Checking to make sure no other deploys already in progress.
-      if: ${{needs.prejob.outputs.envvalue == 'IN_PROGRESS' }}
+      if: ${{needs.prejob.outputs.envvalue != 'IN_PROGRESS' }}
       run: exit 1
     - name: Obtain latest git for Alpine and other requirements (before checkout).
       run: apk add git zip gettext jq openssh-keygen openssl curl --update-cache
