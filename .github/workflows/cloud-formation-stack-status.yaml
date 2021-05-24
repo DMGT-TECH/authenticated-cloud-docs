@@ -44,7 +44,7 @@ jobs:
         echo "CF_STACK_NAME=${{ env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN }}-dev"
         npm install
         npm start >> $GITHUB_ENV
-        echo "::set-output name=envvar::env.CF_STATUS" 
+        echo "::set-output name=envvar::${{env.CF_STATUS}}" 
   
   job_2: 
     name: Build and deploy the site dev
