@@ -59,7 +59,7 @@ jobs:
         working-directory: ./authenticated-cloud-docs/
     container: jch254/docker-node-serverless
     steps:
-    - name: Obtain latest git for Alpine and other requirements (before checkout)
+    - name: Obtain latest git for Alpine and other requirements (before checkout).
       run: apk add git zip gettext jq openssh-keygen openssl curl --update-cache
       working-directory: ./
     - uses: actions/checkout@v2
