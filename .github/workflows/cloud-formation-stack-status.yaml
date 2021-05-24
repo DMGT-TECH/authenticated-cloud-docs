@@ -50,7 +50,7 @@ jobs:
         echo "::set-output name=envvar::$(npm start)" 
   
   job_2: 
-    name: Build and deploy the site dev
+    name: Build and deploy the site dev.
     needs: [job_1]
     if: ${{ ! contains(needs.job_1.outputs.envvar, 'IN_PROGRESS') }}
     runs-on: ubuntu-latest
