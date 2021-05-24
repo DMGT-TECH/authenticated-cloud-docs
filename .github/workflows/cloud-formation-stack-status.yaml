@@ -1,6 +1,9 @@
 name: Deploy and Secure Static Website
 
 on:
+  push:
+    branches: [ main ]
+    
   pull_request:
     branches: [ main ]
 
@@ -131,7 +134,7 @@ jobs:
       env:
         URL: ${{ github.event.issue.comments_url }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: "!contains(env.PULL_NUMBER, '')"
+      if: ${{ github.event_name == 'pull_request' }}
       run: |
         cd ./deployment
         curl \
