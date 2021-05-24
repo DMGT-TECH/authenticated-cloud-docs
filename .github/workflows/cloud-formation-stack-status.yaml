@@ -47,12 +47,12 @@ jobs:
         echo "CF_STACK_NAME=${{ env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN }}-dev"
         npm install
         npm start
-        echo "::set-env name=envvar::$(npm start)" 
+        echo "::set-output name=envvar::$(npm start)" 
   
   job_2: 
     name: Build and deploy the site dev
     needs: [job_1]
-    if: ${{ env.envvar != 'UPDATE_COMPLETE'}}
+    if: ${{steps.prejob.outputs.envvalue == 'UPDATE_COMPLETE' }}
     runs-on: ubuntu-latest
     defaults:
       run:
