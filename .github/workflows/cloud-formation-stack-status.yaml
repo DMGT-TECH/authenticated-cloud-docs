@@ -52,7 +52,7 @@ jobs:
   job_2: 
     name: Build and deploy the site dev
     needs: [job_1]
-    if: ${{needs.job_1.outputs.envvalue == 'UPDATE_COMPLETE' }}
+    if: ${{needs.job_1.outputs.envvalue == 'IN_PROGRESS' }}
     runs-on: ubuntu-latest
     defaults:
       run:
