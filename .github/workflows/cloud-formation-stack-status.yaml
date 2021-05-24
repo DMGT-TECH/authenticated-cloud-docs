@@ -3,7 +3,7 @@ name: Deploy and Secure Static Website
 on:
   push:
     branches: [ main ]
-    
+
   pull_request:
     branches: [ main ]
 
@@ -52,7 +52,7 @@ jobs:
   job_2: 
     name: Build and deploy the site dev
     needs: [job_1]
-    if: ${{needs.prejob.outputs.envvalue != 'IN_PROGRESS' }}
+    if: ${{!contains(needs.prejob.outputs.envvaluet, 'IN_PROGRESS') }}
     runs-on: ubuntu-latest
     defaults:
       run:
