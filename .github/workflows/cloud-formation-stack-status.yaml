@@ -58,7 +58,7 @@ jobs:
         working-directory: ./authenticated-cloud-docs/
     container: jch254/docker-node-serverless
     steps:
-    - name: <-- Cancel (red X) if deploy is already in progress (test3)
+    - name: <-- Cancel (red X) if deploy is already in progress (test3a)
       if: ${{ contains(needs.job_1.outputs.envvar, 'IN_PROGRESS') }}
       run: exit 1
     - name: Obtain latest git for Alpine and other requirements (before checkout).
@@ -121,7 +121,7 @@ jobs:
         cp cloudfront-auth/distributions/$AAD_SSO__RESULT_NAME/$AAD_SSO__RESULT_NAME.zip resources/lambda/
     - name: Build the CDK App
       run: cd deployment; npm i && npm run build
-    - name: <-- Cancel (red X) if deploy is already in progress (test3)
+    - name: <-- Cancel (red X) if deploy is already in progress (test3a)
       if: ${{ contains(needs.job_1.outputs.envvar, 'IN_PROGRESS') }}
       run: exit 1
     - name: Substitute .env vars into CDK configuration and deploy the CDK App
