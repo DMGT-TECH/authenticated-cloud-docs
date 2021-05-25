@@ -24,4 +24,4 @@ export class MyStaticWebsiteStack extends cdk.Stack {
 }
 
 const app = new cdk.App();
-new MyStaticWebsiteStack(app, 'authdocstest-dev', { env: { region: 'us-east-1', account: '787198526106' } }, 'dev');
+new MyStaticWebsiteStack(app, process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN+'-dev', { env: { region: 'us-east-1', account: process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_AWS_ACCOUNT_ID } }, 'dev');
