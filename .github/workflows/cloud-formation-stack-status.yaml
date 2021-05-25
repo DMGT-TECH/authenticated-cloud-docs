@@ -140,7 +140,10 @@ jobs:
         URL: ${{ github.event.issue.comments_url }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: ${{ github.event_name == 'pull_request' }}
+      #if: "!contains(env.PULL_NUMBER, null)"
       run: |
+        echo "print pr number"
+        echo ${{ github.event.number }}
         cd ./deployment
         curl \
           -X POST \
