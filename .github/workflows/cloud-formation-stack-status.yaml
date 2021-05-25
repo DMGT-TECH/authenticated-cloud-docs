@@ -58,7 +58,7 @@ jobs:
         working-directory: ./authenticated-cloud-docs/
     container: jch254/docker-node-serverless
     steps:
-    - name: <-- Cancel (red X) if deploy is already in progress
+    - name: <-- Cancel (red X) if deploy is already in progress (test1)
       if: ${{ contains(needs.job_1.outputs.envvar, 'IN_PROGRESS') }}
       run: exit 1
     - name: Obtain latest git for Alpine and other requirements (before checkout).
