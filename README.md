@@ -6,18 +6,24 @@ A repository that deploys documents to the cloud for secured access via Azure Ac
 * Azure: Ability to register and configure an Azure Active Directoy application.
 * AWS: Control over a hosted zone in Route53, ability to create S3 buckets (AWS access key and secret).
 
-## How to use
+## Simplest Setup and Usage (fork this repo)
+
+You can directly fork this repo and use it for your site.  Although this is simplest, you will need to manually pull to keep your repo up to date with any improvements we make.  If you'd like automatic updating see _Self-Updating Usage_ below.
 
 1. Clone this repo, choose a domain name for your site.
 1. Set up Active Directory for your new site.
     1. Register a new application. Note `Application (client) id` and `Directory (tenant) id`.
     1. Add a web client to the application. Note `Client id` and `Client secret`.
     1. To the web client, add a redirect URI of your domain with `/_callback` at the end.
-1. Edit the configuration in `.env` and `config/docusaurus.config.json` (you'll need to set your AWS/Route53 information there too.)
+1. Edit the configuration in `site/.env` and `site/config/docusaurus.config.json` (you'll need to set your AWS/Route53 information there too.)
 1. Set the required secrets in Github Secrets (see below).
-1. Place your content in the `content` folder
+1. Place your content in the `site/content` folder
 
 Push everything, including `./.github/workflows/` and your site will be set up and deployed by Github Actions.
+
+## Self-Updating Usage (use this repo as a submodule)
+
+It is possible to install this repo as a submodule of your content/configuration repo.  Instructions and an example repo will be forthcoming.
 
 ## Rendering locally
 
