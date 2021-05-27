@@ -23,7 +23,7 @@ jobs:
       run: |
         cd authenticated-cloud-docs
         pwd && ls -a
-        input="../.env"
+        input="../site/.env"
         SUB='AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN'
         while read -r line
         do
@@ -73,7 +73,7 @@ jobs:
       run: |
         while read line; do
           echo "$line" >> $GITHUB_ENV
-        done < ../.env
+        done < ../site/.env
         echo 'PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")' >> $GITHUB_ENV
     - name: Install docusaurus
       run: |
@@ -82,10 +82,10 @@ jobs:
     - name: Configure and build docusaurus site
       run: |
         cd ./deployment
-        cp ../../config/docusaurus/docusaurus.config.js ./tmp
+        cp ../../site/config/docusaurus/docusaurus.config.js ./tmp
         cd ./tmp
         rm -rf docs src static  # Remove default content including conflicting ./src/pages/index.js
-        cp -r ../../../content/* .  # Get docs, src, and static from our content directory
+        cp -r ../../../site/content/* .  # Get docs, src, and static from our content directory
         npm run build
     - name: "Configure AWS Credentials"
       uses: aws-actions/configure-aws-credentials@v1
