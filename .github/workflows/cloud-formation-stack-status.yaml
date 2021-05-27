@@ -18,12 +18,11 @@ jobs:
       envvalue: ${{ steps.setvar.outputs.envvar }}
     steps:
     - uses: actions/checkout@v2
-    - name: Install git and update/init submodules
-      run: git submodule update --init
     - name: Import environment variables from .env
       shell: bash
       run: |
-        pwd && ls -a
+        pwd && ls -la
+        git submodule update --init
         cd authenticated-cloud-docs
         pwd && ls -a
         input="$GITHUB_WORKSPACE/site/.env"
@@ -70,6 +69,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install git and update/init submodules
       run: git submodule update --init
+      working-directory: ./
     - name: Import environment variables from .env
       id: import-env
       shell: bash
