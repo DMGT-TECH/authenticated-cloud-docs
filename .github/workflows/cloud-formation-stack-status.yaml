@@ -23,6 +23,7 @@ jobs:
     - name: Import environment variables from .env
       shell: bash
       run: |
+        pwd && ls -a
         cd authenticated-cloud-docs
         pwd && ls -a
         input="$GITHUB_WORKSPACE/site/.env"
