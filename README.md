@@ -3,8 +3,8 @@ A repository that deploys documents to the cloud for secured access via Azure Ac
 
 ## Prerequisites
 
-* Azure: Ability to register and configure an Azure Active Directoy application.
-* AWS: Control over a hosted zone in Route53, ability to create S3 buckets (AWS access key and secret).
+* Azure: You need to register and configure an Azure Active Directory application+client for your site.
+* AWS: You need control over a hosted zone in Route53, and the ability to create S3 buckets (AWS access key and secret).
 
 ## Simplest Setup and Usage (fork this repo)
 
