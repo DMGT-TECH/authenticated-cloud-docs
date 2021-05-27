@@ -21,9 +21,9 @@ You can directly fork this repo and use it for your site.  Although this is simp
 
 Push everything, including `./.github/workflows/` and your site will be set up and deployed by Github Actions.
 
-## Self-Updating Usage (use this repo as a submodule)
+## Best Setup and Usage (use this repo as a submodule)
 
-It is possible to install this repo as a submodule of your content/configuration repo.  Instructions and an example repo will be forthcoming.
+It is possible to install this repo as a submodule of your content/configuration repo. This allows your repository to be self-updating. Instructions and an example repo will be forthcoming.
 
 ## Rendering locally
 
