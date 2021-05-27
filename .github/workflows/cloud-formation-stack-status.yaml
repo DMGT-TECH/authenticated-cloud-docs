@@ -22,7 +22,7 @@ jobs:
       shell: bash
       run: |
         pwd && ls -la
-        git submodule update --init
+        git submodule update --init --recursive
         cd authenticated-cloud-docs
         pwd && ls -a
         input="$GITHUB_WORKSPACE/site/.env"
@@ -68,7 +68,7 @@ jobs:
       working-directory: ./
     - uses: actions/checkout@v2
     - name: Install git and update/init submodules
-      run: git submodule update --init
+      run: git submodule update --init --recursive
       working-directory: ./
     - name: Import environment variables from .env
       id: import-env
