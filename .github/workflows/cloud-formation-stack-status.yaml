@@ -18,6 +18,8 @@ jobs:
       envvalue: ${{ steps.setvar.outputs.envvar }}
     steps:
     - uses: actions/checkout@v2
+    - name: Install git and update/init submodules
+      run: git submodule update --init
     - name: Import environment variables from .env
       shell: bash
       run: |
