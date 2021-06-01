@@ -1,4 +1,5 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
+const path = require('path')
 module.exports = {
   title: 'Authenticated Cloud Documents',
   tagline: 'Securing your docs',
@@ -6,6 +7,7 @@ module.exports = {
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
+  plugins: [path.resolve(__dirname, 'dmgt-symlinks-plugin')],
   favicon: 'img/favicon.ico',
   organizationName: 'dmgt-tech', // Usually your GitHub org/user name.
   projectName: 'authenticated-cloud-docs', // Usually your repo name.
