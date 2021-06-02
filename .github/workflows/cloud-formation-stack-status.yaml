@@ -88,7 +88,7 @@ jobs:
         cp $GITHUB_WORKSPACE/site/config/docusaurus/docusaurus.config.js ./tmp
         cd ./tmp
         rm -rf docs src static  # Remove default content including conflicting ./src/pages/index.js
-        cp -r $GITHUB_WORKSPACE/site/content/* .  # Get docs, src, and static from our content directory
+        cp -r $GITHUB_WORKSPACE/site/content/* .  # Get docs, sidebars.js, src, and static from our content directory
         npm run build
     - name: "Configure AWS Credentials"
       uses: aws-actions/configure-aws-credentials@v1
