@@ -5,23 +5,22 @@ import * as fs from 'fs';
 
 
 export class MyStaticWebsiteStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props: cdk.StackProps, env: string) {
+  constructor(scope: cdk.Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props);
 
     Tags.of(this).add('service', 'auth-docs-test');
     Tags.of(this).add('name', 'auth-docs-test-website');
-    Tags.of(this).add('environment', env);
     Tags.of(this).add('product-owner', 'rob.chandhok@dmgt.com');
 
-    let publishedDomainName = `${env}.${process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}.${this.node.tryGetContext('domain')}`
+    let publishedDomainName = `${process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}.${this.node.tryGetContext('domain')}`
     fs.writeFileSync('published_domain_name.txt', publishedDomainName)
 
     new MyStaticWebsite(this, id, {
       domainName: this.node.tryGetContext('domain'),
-      siteSubDomain: `${env}.${process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}`,
+      siteSubDomain: `${process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}`,
     });
   }
 }
 
 const app = new cdk.App();
-new MyStaticWebsiteStack(app, process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN+'-dev', { env: { region: 'us-east-1', account: process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_AWS_ACCOUNT_ID } }, 'dev');
+new MyStaticWebsiteStack(app, process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN+'-dev', { env: { region: 'us-east-1', account: process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_AWS_ACCOUNT_ID } });
