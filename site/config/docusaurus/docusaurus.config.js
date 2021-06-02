@@ -3,7 +3,7 @@ const path = require('path')
 module.exports = {
   title: 'Authenticated Cloud Documents',
   tagline: 'Securing your docs',
-  url: 'https://dev.authdocstest.ml.labs.dmgt.com',
+  url: 'https://authdocstest.ml.labs.dmgt.com',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
