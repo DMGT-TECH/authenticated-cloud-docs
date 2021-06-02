@@ -4,7 +4,6 @@ module.exports = function(context, options) {
   return {
     name: "dmgt-symlinks-plugin",
     configureWebpack(config, isServer, utils) {
-      console.log("CHECKING CONFIG:", config)
       return {
         resolve: {
           symlinks: false

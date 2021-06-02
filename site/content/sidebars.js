@@ -9,7 +9,11 @@ module.exports = {
   mySidebar: [
     'Welcome',
     {
-    'Content Editing': ['Content Editing/ContentEditing'],
+    'Content Editing': [
+      'Content Editing/ContentEditing',
+      'Content Editing/ContentEditingNonTech',
+      'Content Editing/ContentEditingTech',
+    ],
     'Site Customization': ['Site Customization/SiteCustomization'],
     'Site Setup': ['Site Setup/SiteSetup'],
   }],
