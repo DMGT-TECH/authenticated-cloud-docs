@@ -86,6 +86,7 @@ jobs:
       run: |
         cd ./deployment
         cp $GITHUB_WORKSPACE/site/config/docusaurus/docusaurus.config.js ./tmp
+        cp -r ../dmgt-symlinks-plugin ./tmp
         cd ./tmp
         rm -rf docs src static  # Remove default content including conflicting ./src/pages/index.js
         cp -r $GITHUB_WORKSPACE/site/content/* .  # Get docs, sidebars.js, src, and static from our content directory
