@@ -10,7 +10,10 @@ if [[ -d "tmp" ]]; then
 else
   npx @docusaurus/init@latest init tmp classic
 fi
-cp ../site/config/docusaurus/docusaurus.config.js ./tmp
+set -a
+source ../site/.env
+set +a
+cat ../site/config/docusaurus/docusaurus.config.js.template | envsubst > ./tmp/docusaurus.config.js
 cp -r ../authenticated-cloud-docs/dmgt-symlinks-plugin ./tmp
 cd ./tmp
 rm -rf sidebars.js docs src static  # Remove default content including conflicting ./src/pages/index.js

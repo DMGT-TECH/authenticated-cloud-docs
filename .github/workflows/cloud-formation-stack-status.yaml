@@ -85,7 +85,7 @@ jobs:
     - name: Configure and build docusaurus site
       run: |
         cd ./deployment
-        cp $GITHUB_WORKSPACE/site/config/docusaurus/docusaurus.config.js ./tmp
+        cat $GITHUB_WORKSPACE/site/config/docusaurus/docusaurus.config.js.template | envsubst > ./tmp/docusaurus.config.js
         cp -r ../dmgt-symlinks-plugin ./tmp
         cd ./tmp
         rm -rf docs src static  # Remove default content including conflicting ./src/pages/index.js

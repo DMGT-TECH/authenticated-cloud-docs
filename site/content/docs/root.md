@@ -7,13 +7,10 @@ Authenticated Cloud Docs is a tool to publish secured content.  This documentati
 
 This site itself is an example of publishing using the tool.
 
-Please explore the site content using the Sidebar at on the left.
-
-## What can you do with this tool?
-
-You write content using Markdown
+Please explore the site content using the Sidebar on the left.
 
 :::note Editing content
 
 At the bottom of each page is an _Edit this page_ link.  This link will bring you directly to the appropriate page in Github to make an edit (if you have access to the repository).
+
 

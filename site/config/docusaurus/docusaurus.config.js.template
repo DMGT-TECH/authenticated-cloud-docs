@@ -3,14 +3,14 @@ const path = require('path')
 module.exports = {
   title: 'Authenticated Cloud Documents',
   tagline: 'Securing your docs',
-  url: 'https://authdocstest.ml.labs.dmgt.com',
+  url: 'https://$AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN.$AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_BASEDOMAIN',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   plugins: [path.resolve(__dirname, 'dmgt-symlinks-plugin')],
   favicon: 'img/favicon.ico',
   organizationName: 'dmgt-tech', // Usually your GitHub org/user name.
-  projectName: 'authenticated-cloud-docs', // Usually your repo name.
+  projectName: '$AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN', // Usually your repo name.
   themeConfig: {
     navbar: {
       title: 'Authenticated Cloud Documents',
@@ -23,10 +23,10 @@ module.exports = {
           type: 'doc',
           docId: 'detail',
           position: 'left',
-          label: 'ExampleNavbarItem',
+          label: 'Example',
         },
         {
-          href: 'https://github.com/DMGT-TECH/authenticated-cloud-docs',
+          href: '$GITHUB_REPO_URL',
           label: 'Get Code',
           position: 'right',
         },
@@ -57,7 +57,7 @@ module.exports = {
             },
             {
               label: 'Code Repository',
-              href: 'https://github.com/DMGT-TECH/authenticated-cloud-docs',
+              href: '$GITHUB_REPO_URL',
             },
           ],
         },
@@ -87,7 +87,7 @@ module.exports = {
           routeBasePath: '/',
           // Please change this to your repo.
           editUrl:
-            'https://github.com/DMGT-TECH/authenticated-cloud-docs/edit/main/site/content/',
+            '$GITHUB_REPO_URL/edit/main/site/content/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
