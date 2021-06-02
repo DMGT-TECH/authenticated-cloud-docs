@@ -23,9 +23,8 @@ module.exports = {
           type: 'doc',
           docId: 'detail',
           position: 'left',
-          label: 'Example Details',
+          label: 'ExampleNavbarItem',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/DMGT-TECH/authenticated-cloud-docs',
           label: 'Get Code',
@@ -88,13 +87,7 @@ module.exports = {
           routeBasePath: '/',
           // Please change this to your repo.
           editUrl:
-            'https://github.com/DMGT-TECH/authenticated-cloud-docs/edit/main/authenticated-cloud-docs/content/',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/blog/',
+            'https://github.com/DMGT-TECH/authenticated-cloud-docs/edit/main/site/content/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

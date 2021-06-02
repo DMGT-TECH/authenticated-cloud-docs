@@ -3,6 +3,13 @@ id: Welcome
 slug: /
 ---
 
-This is an example of site published using our authenticated cloud documents code.  It's really working nicely.  This is an edit.
+Authenticated Cloud Docs is a tool to publish secured content.  This documentation explains how to edit the content on an existing site ([here](./Editing Content/EditingContent)), how to customize a site, and how to get a site set up if you don't have one already.
 
-For detailed examples visit [the details page](./detail)
+This site itself is an example of publishing using the tool.
+
+It is worth noting that at the bottom of each page
+
+:::note Editing content
+
+At the bottom of each page is an Edit link.  This link will bring you directly to the appropriate page in Github to make an edit (if you have access to the repository).
+
