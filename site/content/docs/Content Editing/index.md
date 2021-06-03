@@ -1,6 +1,6 @@
 ---
 id: ContentEditing
-title: Editing Content Overview
+title: Overview
 ---
 
 There are multiple options for editing content, technical and non-technical users.

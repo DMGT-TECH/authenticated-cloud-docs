@@ -18,5 +18,6 @@ cp -r ../authenticated-cloud-docs/dmgt-symlinks-plugin ./tmp
 cd ./tmp
 rm -rf sidebars.js docs src static  # Remove default content including conflicting ./src/pages/index.js
 ln -s ../../site/content/* .  # Get docs, src, and static from our content directory
-npm run build
-npm run serve
+#npm run build
+#npm run serve
+npm run start

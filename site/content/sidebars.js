@@ -16,5 +16,6 @@ module.exports = {
     ],
     'Site Customization': ['Site Customization/SiteCustomization'],
     'Site Setup': ['Site Setup/SiteSetup'],
+    'Examples': ['TabExample1', 'TabExample2'],
   }],
 };

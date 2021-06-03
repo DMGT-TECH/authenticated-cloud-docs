@@ -21,9 +21,9 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'detail',
+          docId: 'TabExample1',
           position: 'left',
-          label: 'Example',
+          label: 'Tab Example',
         },
         {
           href: '$GITHUB_REPO_URL',
@@ -41,10 +41,6 @@ module.exports = {
             {
               label: 'Home',
               to: '/',
-            },
-            {
-              label: 'Details',
-              to: '/detail',
             },
           ],
         },
