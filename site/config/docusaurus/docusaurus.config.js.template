@@ -73,6 +73,13 @@ module.exports = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} DMGT, plc.`,
     },
+    algolia: {
+      apiKey: 'ef8ac0a19b7786bc6646e4f5ddfeeb5d',
+      indexName: 'AuthCloudDocs1',
+      contextualSearch: false,
+      appId: 'PS9RDBVQIQ',
+      searchParameters: {},
+    }
   },
   presets: [
     [
