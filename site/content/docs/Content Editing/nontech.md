@@ -1,6 +1,6 @@
 ---
 id: ContentEditingNonTech
-title: Edits for "Non-Technical" Users
+title: For "Non-Technical" Users
 ---
 
 Non-technical users can make their edits directly on Github.com via a web browser.

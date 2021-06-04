@@ -11,6 +11,6 @@ Please explore the site content using the Sidebar on the left.
 
 :::note Editing content
 
-At the bottom of each page is an _Edit this page_ link.  This link will bring you directly to the appropriate page in Github to make an edit (if you have access to the repository).
+At the bottom of each page is an _Edit this page_ link.  This link will bring you directly to the appropriate page in Github to make an edit (if you have access to the Github repository).
 
-
+:::
