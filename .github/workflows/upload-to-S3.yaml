@@ -33,9 +33,6 @@ jobs:
         ./localhost.sh & jobs
         cd localhost/tmp/build
         pwd && ls -la
-    
-    - name: Sync the temp folder to S3 bucket
-      
 
 
   job_2:
