@@ -18,8 +18,16 @@ jobs:
       shell: bash
       run: |
         pwd && ls -la
-        cat localhost.sh
-        cd site
+        cd authenticated-cloud-docs
+        pwd && ls -a
+        input="$GITHUB_WORKSPACE/site/.env"
+        SUB='AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN'
+        while read -r line
+        do
+          if [[ "$line" == *"$SUB"* ]]; then
+            echo "$line" >> $GITHUB_ENV
+          fi
+        done < "$input"
         echo $AAD_SSO__REDIRECT_URI | cut -d "/" -f 3
       
 
