@@ -28,7 +28,8 @@ jobs:
             echo "$line" >> $GITHUB_ENV
           fi
         done < "$input"
-        echo ${{ env.AAD_SSO__REDIRECT_URI }} | cut -d "/" -f 3
+        cd site
+        echo ${{ env.AAD_SSO__REDIRECT_URI }}
       
 
 
