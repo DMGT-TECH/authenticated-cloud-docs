@@ -12,11 +12,11 @@ env:
 jobs:
   job_1: 
     name: IF the site is already deployed, update site content
+    if: ${{ contains(env.BUILD_FROM_SCRATCH, 'false') }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Deploy the site locally and Upload files
-      if: env.BUILD_FROM_SCRATCH == 'true'
       shell: bash
       env:
         ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
