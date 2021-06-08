@@ -35,9 +35,8 @@ jobs:
           fi
         done < "$input"
         cd ../
-        chmod 777 localhost.sh
-        ./localhost.sh & jobs
-        sleep 60
+        chmod 777 localbuild.sh
+        ./localbuild.sh & jobs
         cd authenticated-cloud-docs/deployment/S3SyncUp
         pwd && ls -la
         touch .env
