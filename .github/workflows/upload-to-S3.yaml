@@ -31,8 +31,10 @@ jobs:
         cd ../
         chmod 777 localhost.sh
         ./localhost.sh & jobs
+        cd localhost/tmp/build
         pwd && ls -la
-        echo $AD_SSO__REDIRECT_URI
+    
+    - name: Sync the temp folder to S3 bucket
       
 
 
