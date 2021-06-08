@@ -6,12 +6,13 @@ on:
 
   pull_request:
     branches: [ main ]
-env: 
+env:
   BUILD_FROM_SCRATCH: ${{ secrets.BUILD_FROM_SCRATCH }}
 
 jobs:
-  job_1: 
+  job_1:
     name: IF the site is already deployed, update site content
+    if: ${{ env.BUILD_FROM_SCRATCH == 'false' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -61,7 +62,7 @@ jobs:
     - name: <-- Cancel CF Status  check and site deployment
       if: env.BUILD_FROM_SCRATCH == 'false'
       run: exit 1
-    
+
     - name: Import environment variables from .env
       shell: bash
       run: |
@@ -125,7 +126,7 @@ jobs:
         done < $GITHUB_WORKSPACE/site/.env
         echo 'PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")' >> $GITHUB_ENV
         echo $AAD_SSO__REDIRECT_URI
-        echo 
+        echo
     - name: Install docusaurus
       run: |
         cd ./deployment
