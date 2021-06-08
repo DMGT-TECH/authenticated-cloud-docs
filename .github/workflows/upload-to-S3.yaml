@@ -100,9 +100,6 @@ jobs:
     name: Build and deploy the site dev.
     needs: [job_2]
     runs-on: ubuntu-latest
-    env: 
-      BUILD_FROM_SCRATCH: ${{ secrets.BUILD_FROM_SCRATCH }}
-    if: ${BUILD_FROM_SCRATCH} == 'true'
     defaults:
       run:
         working-directory: ./authenticated-cloud-docs/
