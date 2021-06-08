@@ -50,6 +50,7 @@ jobs:
 
   job_2:
     name: Check the current status of the cloud formation stack
+    if: env.BUILD_FROM_SCRATCH == 'false'
     runs-on: ubuntu-latest
     strategy:
       matrix:
