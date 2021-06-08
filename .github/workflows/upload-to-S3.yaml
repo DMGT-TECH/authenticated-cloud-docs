@@ -37,6 +37,13 @@ jobs:
     name: Upload files to S3 bucket
     runs-on: ubuntu-latest
     steps:
+    - name: get cwd
+      shell: bash
+      run: |
+        pwd && ls -la
+        cd ./localhost/tmp/build
+        pwd && ls -la
+        sleep 30
     - uses: actions/checkout@master
     - uses: jakejarvis/s3-sync-action@master
       with:
@@ -46,6 +53,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         SOURCE_DIR: './localhost/tmp/build' 
+    
 
 
   job_2:
