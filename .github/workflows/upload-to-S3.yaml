@@ -21,6 +21,8 @@ jobs:
         cat localhost.sh
         cd site
         cat .env
+        arrIN=(${$AAD_SSO__REDIRECT_URI//// })
+        echo ${arrIN[1]} 
       
 
 
