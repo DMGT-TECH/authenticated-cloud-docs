@@ -13,9 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
     - uses: actions/checkout@v2
-    
-    - name: Deploy the site locally
+    - name: Deploy the site locally and Upload files
       shell: bash
+      env:
+        ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: us-east-1
       run: |
         pwd && ls -la
         cd site
@@ -31,29 +34,15 @@ jobs:
         cd ../
         chmod 777 localhost.sh
         ./localhost.sh & jobs
-        
-    
-  deploy:
-    name: Upload files to S3 bucket
-    runs-on: ubuntu-latest
-    steps:
-    - name: get cwd
-      shell: bash
-      run: |
+        sleep 60
+        cd authenticated-cloud-docs/deployment/S3SyncUp
         pwd && ls -la
-        cd ./localhost/tmp/build
-        pwd && ls -la
-        sleep 30
-    - uses: actions/checkout@master
-    - uses: jakejarvis/s3-sync-action@master
-      with:
-        args: --acl public-read --follow-symlinks --delete
-      env:
-        AWS_S3_BUCKET: 'uploader-sd'
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        SOURCE_DIR: './localhost/tmp/build' 
-    
+        touch .env
+        echo "ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
+        echo "SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}" >> .env
+        echo "CF_STACK_NAME=${{ env.AAD_SSO__REDIRECT_URI }}"
+        npm install
+        node index.js
 
 
   job_2:
