@@ -11,9 +11,6 @@ jobs:
   job_1: 
     name: IF the site is already deployed, update site content
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./authenticated-cloud-docs/
     steps: 
     - uses: actions/checkout@v2
     
