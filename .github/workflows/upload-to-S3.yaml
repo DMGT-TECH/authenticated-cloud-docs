@@ -11,14 +11,11 @@ jobs:
   job_1: 
     name: IF the site is already deployed, update site content
     runs-on: ubuntu-latest
-    env: 
-      build_from_scratch:  ${{ secrets.BUILD_FROM_SCRATCH}}
     defaults:
       run:
         working-directory: ./authenticated-cloud-docs/
     steps: 
     - name: Deploy the site locally
-      if: env.build_from_scratch != 'true'
       shell: bash
       run: |
         pwd && ls -la
