@@ -4,20 +4,48 @@ on:
   push:
     branches: [ main ]
 
-  
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  job_1:
+  job_1: 
+    name: IF the site is already deployed, update site content
+    runs-on: ubuntu-latest
+    env: 
+      build_from_scratch:  ${{ secrets.BUILD_FROM_SCRATCH}}
+    steps: 
+    - name: Deploy the site locally
+      if: env.build_from_scratch != 'true'
+      shell: bash
+      run: |
+        pwd && ls -la
+        npm install --save
+        chmod 777 localhost.sh
+        ./localhost.sh
+        cd site
+        while read line; do
+          echo "$line" >> $GITHUB_ENV
+        done < $GITHUB_WORKSPACE/site/.env
+        echo 'BUCKET_NAME=$($AAD_SSO__REDIRECT_URI////)[1]' >> $GITHUB_ENV
+        echo $BUCKET_NAME
+
+      
+
+
+  job_2:
     name: Check the current status of the cloud formation stack
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12.x]
+    env: 
+      build_from_scratch:  ${{ secrets.BUILD_FROM_SCRATCH}}
     outputs:
       envvalue: ${{ steps.setvar.outputs.envvar }}
     steps:
     - uses: actions/checkout@v2
     - name: Import environment variables from .env
+      if: env.build_from_scratch == 'true'
       shell: bash
       run: |
         pwd && ls -la
@@ -50,7 +78,7 @@ jobs:
         npm start
         echo "::set-output name=envvar::$(npm start)"
 
-  job_2:
+  job_3:
     name: Build and deploy the site dev.
     needs: [job_1]
     runs-on: ubuntu-latest
@@ -77,6 +105,8 @@ jobs:
           echo "$line" >> $GITHUB_ENV
         done < $GITHUB_WORKSPACE/site/.env
         echo 'PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")' >> $GITHUB_ENV
+        echo $AAD_SSO__REDIRECT_URI
+        echo 
     - name: Install docusaurus
       run: |
         cd ./deployment
