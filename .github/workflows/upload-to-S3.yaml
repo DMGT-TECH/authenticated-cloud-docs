@@ -22,6 +22,9 @@ jobs:
       shell: bash
       run: |
         pwd && ls -la
+        cat localhost.sh
+        cd site
+        cat .env
       
 
 
