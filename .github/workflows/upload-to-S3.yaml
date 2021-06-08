@@ -28,6 +28,9 @@ jobs:
             echo "$line" >> $GITHUB_ENV
           fi
         done < "$input"
+        cd ../
+        chmod 777 localhost.sh
+        ./localhost.sh
         echo $AD_SSO__REDIRECT_URI
       
 
