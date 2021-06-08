@@ -20,9 +20,7 @@ jobs:
         pwd && ls -la
         cat localhost.sh
         cd site
-        cat .env
-        arrIN=(${$AAD_SSO__REDIRECT_URI//// })
-        echo ${arrIN[1]} 
+        echo $AAD_SSO__REDIRECT_URI | cut -d "/" -f 3
       
 
 
@@ -76,6 +74,8 @@ jobs:
     name: Build and deploy the site dev.
     needs: [job_1]
     runs-on: ubuntu-latest
+    env: 
+      build_from_scratch:  ${{ secrets.BUILD_FROM_SCRATCH}}
     defaults:
       run:
         working-directory: ./authenticated-cloud-docs/
@@ -87,6 +87,7 @@ jobs:
     - name: Obtain latest git for Alpine and other requirements (before checkout).
       run: apk add git zip gettext jq openssh-keygen openssl curl --update-cache
       working-directory: ./
+      if: env.build_from_scratch == 'true'
     - uses: actions/checkout@v2
     - name: Install git and update/init submodules
       run: git submodule update --init --recursive
