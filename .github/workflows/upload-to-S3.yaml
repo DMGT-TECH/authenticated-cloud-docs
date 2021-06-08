@@ -10,6 +10,9 @@ on:
 jobs:
   job_1: 
     name: IF the site is already deployed, update site content
+    env: 
+      build_from_scratch: ${{ secrets.BUILD_FROM_SCRATCH }}
+    if: ${{ env.build_from_scratch != 'true' }}
     runs-on: ubuntu-latest
     steps: 
     - uses: actions/checkout@v2
@@ -47,7 +50,10 @@ jobs:
 
   job_2:
     name: Check the current status of the cloud formation stack
-    if: ${{ secrets.BUILD_FROM_SCRATCH == 'true' }}
+    env: 
+      build_from_scratch: ${{ secrets.BUILD_FROM_SCRATCH }}
+    if: ${{ env.build_from_scratch== 'true' }}
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -91,11 +97,11 @@ jobs:
 
   job_3:
     name: Build and deploy the site dev.
-    if: ${{ secrets.BUILD_FROM_SCRATCH == 'true' }}
     needs: [job_1]
     runs-on: ubuntu-latest
     env: 
-      build_from_scratch:  ${{ secrets.BUILD_FROM_SCRATCH}}
+      build_from_scratch: ${{ secrets.BUILD_FROM_SCRATCH }}
+    if: ${{ env.build_from_scratch== 'true' }}
     defaults:
       run:
         working-directory: ./authenticated-cloud-docs/
