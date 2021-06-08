@@ -12,11 +12,9 @@ env:
 jobs:
   job_1: 
     name: IF the site is already deployed, update site content
+    if: env.BUILD_FROM_SCRATCH == 'true'
     runs-on: ubuntu-latest
-    steps: 
-    - run: echo ${{ env.BUILD_FROM_SCRATCH }}
-      if: env.BUILD_FROM_SCRATCH == 'true'
-
+    steps:
     - uses: actions/checkout@v2
     - name: Deploy the site locally and Upload files
       shell: bash
