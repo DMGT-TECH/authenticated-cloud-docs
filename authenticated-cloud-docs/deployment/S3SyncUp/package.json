@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.923.0",
+    "dotenv": "^10.0.0",
     "node-mime-types": "^1.0.0"
   }
 }
