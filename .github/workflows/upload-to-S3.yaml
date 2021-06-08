@@ -12,7 +12,7 @@ jobs:
     name: IF the site is already deployed, update site content
     env: 
       BUILD_FROM_SCRATCH: ${{ secrets.BUILD_FROM_SCRATCH }}
-    if: ${{ env.BUILD_FROM_SCRATCH != 'true' }}
+    if: ${{ BUILD_FROM_SCRATCH != 'true' }}
     runs-on: ubuntu-latest
     steps: 
     - uses: actions/checkout@v2
