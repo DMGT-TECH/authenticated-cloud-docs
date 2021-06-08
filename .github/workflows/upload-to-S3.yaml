@@ -12,7 +12,7 @@ env:
 jobs:
   job_1: 
     name: IF the site is already deployed, update site content
-    if: contains(env.BUILD_FROM_SCRATCH, 'true')
+    if: contains($env.BUILD_FROM_SCRATCH, 'true')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
