@@ -57,9 +57,6 @@ jobs:
     outputs:
       envvalue: ${{ steps.setvar.outputs.envvar }}
     steps:
-    - run: echo ${{ env.BUILD_FROM_SCRATCH }}
-      if: env.BUILD_FROM_SCRATCH == 'true'
-
     - uses: actions/checkout@v2
     - name: Import environment variables from .env
       shell: bash
@@ -78,6 +75,7 @@ jobs:
         done < "$input"
 
     - name: Check the CF stack status
+      if: env.BUILD_FROM_SCRATCH == 'true'
       id: cfStatus
       env:
         ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
