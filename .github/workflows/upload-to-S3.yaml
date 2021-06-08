@@ -52,7 +52,7 @@ jobs:
     name: Check the current status of the cloud formation stack
     env: 
       BUILD_FROM_SCRATCH: ${{ secrets.BUILD_FROM_SCRATCH }}
-    if: ${{ env.BUILD_FROM_SCRATCH == 'true' }}
+    if: ${BUILD_FROM_SCRATCH} == 'true'
 
     runs-on: ubuntu-latest
     strategy:
@@ -101,7 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       BUILD_FROM_SCRATCH: ${{ secrets.BUILD_FROM_SCRATCH }}
-    if: ${{ env.BUILD_FROM_SCRATCH == 'true' }}
+    if: ${BUILD_FROM_SCRATCH} == 'true'
     defaults:
       run:
         working-directory: ./authenticated-cloud-docs/
