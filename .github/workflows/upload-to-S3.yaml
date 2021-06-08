@@ -12,11 +12,11 @@ jobs:
     name: IF the site is already deployed, update site content
     env: 
       BUILD_FROM_SCRATCH: ${{ secrets.BUILD_FROM_SCRATCH }}
-    if: ${BUILD_FROM_SCRATCH} != 'true'
     runs-on: ubuntu-latest
     steps: 
     - uses: actions/checkout@v2
     - name: Deploy the site locally and Upload files
+      if: ${BUILD_FROM_SCRATCH} != 'true'
       shell: bash
       env:
         ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -97,7 +97,7 @@ jobs:
 
   job_3:
     name: Build and deploy the site dev.
-    needs: [job_1]
+    needs: [job_2]
     runs-on: ubuntu-latest
     env: 
       BUILD_FROM_SCRATCH: ${{ secrets.BUILD_FROM_SCRATCH }}
