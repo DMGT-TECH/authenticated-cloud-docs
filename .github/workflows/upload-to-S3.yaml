@@ -18,10 +18,8 @@ jobs:
       if: env.build_from_scratch != 'true'
       shell: bash
       run: |
+        cd authenticated-cloud-docs
         pwd && ls -la
-        npm install --save
-        chmod 777 localhost.sh
-        ./localhost.sh
         cd site
         while read line; do
           echo "$line" >> $GITHUB_ENV
