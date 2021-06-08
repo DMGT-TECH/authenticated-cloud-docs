@@ -18,9 +18,9 @@ jobs:
       shell: bash
       run: |
         pwd && ls -la
-        cd authenticated-cloud-docs
+        cd site
         pwd && ls -a
-        input="$GITHUB_WORKSPACE/site/.env"
+        input="./.env"
         SUB='AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN'
         while read -r line
         do
@@ -28,7 +28,6 @@ jobs:
             echo "$line" >> $GITHUB_ENV
           fi
         done < "$input"
-        cd site
         echo ${{ env.AAD_SSO__REDIRECT_URI }}
       
 
