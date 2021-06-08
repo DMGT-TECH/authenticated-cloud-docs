@@ -18,8 +18,10 @@ jobs:
       if: env.build_from_scratch != 'true'
       shell: bash
       run: |
-        cd authenticated-cloud-docs
         pwd && ls -la
+        git submodule update --init --recursive
+        cd authenticated-cloud-docs
+        pwd && ls -a
         cd site
         while read line; do
           echo "$line" >> $GITHUB_ENV
