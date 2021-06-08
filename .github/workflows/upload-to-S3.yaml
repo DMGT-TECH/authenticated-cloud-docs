@@ -28,7 +28,7 @@ jobs:
             echo "$line" >> $GITHUB_ENV
           fi
         done < "$input"
-        echo ${{ env.AAD_SSO__REDIRECT_URI }}
+        echo $AD_SSO__REDIRECT_URI
       
 
 
