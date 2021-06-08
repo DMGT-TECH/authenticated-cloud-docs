@@ -30,7 +30,8 @@ jobs:
         done < "$input"
         cd ../
         chmod 777 localhost.sh
-        ./localhost.sh
+        ./localhost.sh & jobs
+        pwd && ls -la
         echo $AD_SSO__REDIRECT_URI
       
 
