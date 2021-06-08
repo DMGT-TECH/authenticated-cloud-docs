@@ -47,18 +47,16 @@ jobs:
 
   job_2:
     name: Check the current status of the cloud formation stack
+    if: ${{ secrets.BUILD_FROM_SCRATCH == 'true' }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12.x]
-    env: 
-      build_from_scratch:  ${{ secrets.BUILD_FROM_SCRATCH}}
     outputs:
       envvalue: ${{ steps.setvar.outputs.envvar }}
     steps:
     - uses: actions/checkout@v2
     - name: Import environment variables from .env
-      if: env.build_from_scratch == 'true'
       shell: bash
       run: |
         pwd && ls -la
@@ -93,6 +91,7 @@ jobs:
 
   job_3:
     name: Build and deploy the site dev.
+    if: ${{ secrets.BUILD_FROM_SCRATCH == 'true' }}
     needs: [job_1]
     runs-on: ubuntu-latest
     env: 
