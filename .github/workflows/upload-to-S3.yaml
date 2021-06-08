@@ -31,6 +31,15 @@ jobs:
         cd ../
         chmod 777 localhost.sh
         ./localhost.sh & jobs
+        
+    
+    - name: Upload to S3
+      shell: bash
+      uses: whatnick/wait-action@master
+      with:
+        time: 60s'
+
+      run: |
         cd localhost/tmp/build
         pwd && ls -la
 
