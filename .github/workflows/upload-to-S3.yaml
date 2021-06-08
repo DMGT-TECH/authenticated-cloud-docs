@@ -60,7 +60,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: <-- Cancel CF Status  check and site deployment
       if: env.BUILD_FROM_SCRATCH == 'false'
-      run: exit 0
+      run: exit 1
     
     - name: Import environment variables from .env
       shell: bash
