@@ -197,7 +197,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git branch
-        cp deployed_cloudfront_distribution_id.txt $GITHUB_WORKSPACE/.github/
+        mv deployed_cloudfront_distribution_id.txt $GITHUB_WORKSPACE/.github/
         git add $GITHUB_WORKSPACE/.github/deployed_cloudfront_distribution_id.txt
         git commit -m "Committing result of Distribution Id"
         git pull
