@@ -1,4 +1,4 @@
-name: Deploy and Secure Static Website
+name: Fast Deploy and Secure Static Website
 
 on:
   push:
@@ -6,11 +6,51 @@ on:
 
   pull_request:
     branches: [ main ]
+env:
+  BUILD_FROM_SCRATCH: ${{ secrets.BUILD_FROM_SCRATCH }}
 
 jobs:
   job_1:
+    name: IF the site is already deployed, update site content
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Deploy the site locally and Upload files
+      if: env.BUILD_FROM_SCRATCH == 'false'
+      shell: bash
+      env:
+        ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: us-east-1
+      run: |
+        pwd && ls -la
+        cd site
+        pwd && ls -a
+        input="./.env"
+        SUB='AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN'
+        while read -r line
+        do
+          if [[ "$line" == *"$SUB"* ]]; then
+            echo "$line" >> $GITHUB_ENV
+          fi
+        done < "$input"
+        cd ../
+        chmod 777 localbuild.sh
+        ./localbuild.sh
+        cd authenticated-cloud-docs/deployment/S3SyncUp
+        pwd && ls -la
+        touch .env
+        echo "ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
+        echo "SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}" >> .env
+        echo "CF_STACK_NAME=${{ env.AAD_SSO__REDIRECT_URI }}"
+        npm install
+        node index.js
+
+
+  job_2:
     name: Check the current status of the cloud formation stack
     runs-on: ubuntu-latest
+    needs: [job_1]
     strategy:
       matrix:
         node-version: [12.x]
@@ -18,6 +58,10 @@ jobs:
       envvalue: ${{ steps.setvar.outputs.envvar }}
     steps:
     - uses: actions/checkout@v2
+    - name: <-- Cancel CF Status  check and site deployment
+      if: env.BUILD_FROM_SCRATCH == 'false'
+      uses: andymckay/cancel-action@0.2
+      # run: exit 1
     - name: Import environment variables from .env
       shell: bash
       run: |
@@ -35,6 +79,7 @@ jobs:
         done < "$input"
 
     - name: Check the CF stack status
+      if: env.BUILD_FROM_SCRATCH == 'true'
       id: cfStatus
       env:
         ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -51,9 +96,9 @@ jobs:
         npm start
         echo "::set-output name=envvar::$(npm start)"
 
-  job_2:
+  job_3:
     name: Build and deploy the site dev.
-    needs: [job_1]
+    needs: [job_2]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -78,6 +123,8 @@ jobs:
           echo "$line" >> $GITHUB_ENV
         done < $GITHUB_WORKSPACE/site/.env
         echo 'PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")' >> $GITHUB_ENV
+        echo $AAD_SSO__REDIRECT_URI
+        echo
     - name: Install docusaurus
       run: |
         cd ./deployment
@@ -139,6 +186,23 @@ jobs:
         cat cdk.context.json
         npm run cdk deploy -- --require-approval never
         echo "Published to: `cat published_domain_name.txt`"
+        echo "Cloudfront Distribution ID: `cat deployed_cloudfront_distribution_id.txt`"
+    - name: Commit files back to branch
+      run: |
+        cd ./deployment
+        pwd
+        git fetch
+        git branch -a
+        git checkout main
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git branch
+        cp deployed_cloudfront_distribution_id.txt $GITHUB_WORKSPACE/.github/
+        git add $GITHUB_WORKSPACE/.github/deployed_cloudfront_distribution_id.txt
+        git commit -m "Committing result of Distribution Id"
+        git pull
+        git push
+
     - name: Comment on the PR with the full published domain
       env:
         URL: ${{ github.event.issue.comments_url }}
