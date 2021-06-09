@@ -189,6 +189,7 @@ jobs:
         echo "Cloudfront Distribution ID: `cat deployed_cloudfront_distribution_id.txt`"
     - name: Commit files back to branch
       run: |
+        cd ./deployment
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git branch
