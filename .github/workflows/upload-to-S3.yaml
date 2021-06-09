@@ -111,7 +111,6 @@ jobs:
     - name: Obtain latest git for Alpine and other requirements (before checkout).
       run: apk add git zip gettext jq openssh-keygen openssl curl --update-cache
       working-directory: ./
-      if: env.build_from_scratch == 'true'
     - uses: actions/checkout@v2
     - name: Install git and update/init submodules
       run: git submodule update --init --recursive
@@ -187,6 +186,18 @@ jobs:
         cat cdk.context.json
         npm run cdk deploy -- --require-approval never
         echo "Published to: `cat published_domain_name.txt`"
+        echo "Cloudfront Distribution ID: `cat deployed_cloudfront_distribution_id.txt`"
+    - name: Commit files back to branch
+      run: |
+        cd ./deployment
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git branch
+        git add deployed_cloudfront_distribution_id.txt
+        git commit -m "Committing result of Distribution Id"
+        git pull
+        git push
+
     - name: Comment on the PR with the full published domain
       env:
         URL: ${{ github.event.issue.comments_url }}
