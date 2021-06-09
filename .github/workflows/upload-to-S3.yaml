@@ -197,6 +197,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git branch
+        aws cloudformation describe-stacks --region us-east-1 --stack-name ${AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}-dev --query "Stacks[0].Outputs[?contains(OutputKey,'DistributionId')].OutputValue" | jq -r ".[]" > deployed_cloudfront_distribution_id.txt
         mv deployed_cloudfront_distribution_id.txt $GITHUB_WORKSPACE/.github/
         git add $GITHUB_WORKSPACE/.github/deployed_cloudfront_distribution_id.txt
         git commit -m "Committing result of Distribution Id"
