@@ -22,8 +22,8 @@ export class MyStaticWebsiteStack extends cdk.Stack {
       siteSubDomain: `${process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}`,
     });
 
-    new cdk.CfnOutput(this, "MyStackAccount", {
-      description: "Account of this stack",
+    new cdk.CfnOutput(this, "DistributionId", {
+      description: "DistributionId of this stack",
       value: this.distributionId;
     });
 
