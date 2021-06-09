@@ -24,7 +24,7 @@ export class MyStaticWebsiteStack extends cdk.Stack {
 
     new cdk.CfnOutput(this, "DistributionId", {
       description: "DistributionId of this stack",
-      value: this.distributionId;
+      value: this.distributionId
     });
 
 
