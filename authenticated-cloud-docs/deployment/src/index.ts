@@ -19,6 +19,7 @@ export class MyStaticWebsiteStack extends cdk.Stack {
       domainName: this.node.tryGetContext('domain'),
       siteSubDomain: `${process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}`,
     });
+    console.log('deployed_cloudfront_distribution_id = '+ deployed.cloudFrontDistributionId.toString())
     fs.writeFileSync('deployed_cloudfront_distribution_id.txt', deployed.cloudFrontDistributionId)
   }
 }
