@@ -11,6 +11,7 @@ import s3deploy = require('@aws-cdk/aws-s3-deployment');
 import acm = require('@aws-cdk/aws-certificatemanager');
 import cdk = require('@aws-cdk/core');
 import targets = require('@aws-cdk/aws-route53-targets/lib');
+import * as fs from 'fs';
 
 export interface StaticSiteProps {
   domainName: string;
@@ -91,8 +92,9 @@ export class MyStaticWebsite extends Construct {
       certificate,
       domainNames: [siteDomain],
     });
-
     new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
+    fs.writeFileSync('deployed_cloudfront_distribution_id.txt', distribution.distributionId)
+    
     this.cloudFrontDistributionId = distribution.distributionId;
     console.log("Cfn Output ="+ (distribution.distributionId).toString());
 
