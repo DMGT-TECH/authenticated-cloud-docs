@@ -93,7 +93,7 @@ export class MyStaticWebsite extends Construct {
     });
 
     new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
-    this.cloudFrontDistributionId = distribution.distributionId
+    this.cloudFrontDistributionId = distribution.distributionId;
 
     // Route53 alias record for the CloudFront distribution
     new route53.ARecord(this as any, 'SiteAliasRecord', {
