@@ -24,9 +24,6 @@ export interface StaticSiteProps {
  * Route53 alias record, and ACM certificate.
  */
 export class MyStaticWebsite extends Construct {
-
-  public cloudFrontDistributionId:string;
-
   constructor(parent: Construct, name: string, props: StaticSiteProps) {
     super(parent, name);
 
@@ -92,8 +89,6 @@ export class MyStaticWebsite extends Construct {
       domainNames: [siteDomain],
     });
     new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
-    this.cloudFrontDistributionId = distribution.distributionId;
-    console.log("Cfn Output ="+ JSON.parse(distribution));
 
     // Route53 alias record for the CloudFront distribution
     new route53.ARecord(this as any, 'SiteAliasRecord', {

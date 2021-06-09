@@ -5,6 +5,8 @@ import * as fs from 'fs';
 
 
 export class MyStaticWebsiteStack extends cdk.Stack {
+  public distributionId:string;
+
   constructor(scope: cdk.Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props);
 
@@ -15,13 +17,19 @@ export class MyStaticWebsiteStack extends cdk.Stack {
     let publishedDomainName = `${process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}.${this.node.tryGetContext('domain')}`
     fs.writeFileSync('published_domain_name.txt', publishedDomainName)
 
-    let deployed = new MyStaticWebsite(this, id, {
+    new MyStaticWebsite(this, id, {
       domainName: this.node.tryGetContext('domain'),
       siteSubDomain: `${process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}`,
     });
 
-    console.log('deployed_cloudfront_distribution_id = '+ this.distributionId.toString())
-    fs.writeFileSync('deployed_cloudfront_distribution_id.txt', deployed.cloudFrontDistributionId)
+    new cdk.CfnOutput(this, "MyStackAccount", {
+      description: "Account of this stack",
+      value: this.distributionId;
+    });
+
+
+    console.log('deployed_cloudfront_distribution_id = '+ this.distributionId)
+    fs.writeFileSync('deployed_cloudfront_distribution_id.txt', this.distributionId)
   }
 }
 
