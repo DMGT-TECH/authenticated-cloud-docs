@@ -191,6 +191,7 @@ jobs:
       run: |
         cd ./deployment
         pwd
+        git fetch
         git branch -a
         git checkout main
         git config --local user.email "action@github.com"
