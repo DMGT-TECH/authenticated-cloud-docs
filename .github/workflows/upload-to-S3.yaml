@@ -111,7 +111,6 @@ jobs:
     - name: Obtain latest git for Alpine and other requirements (before checkout).
       run: apk add git zip gettext jq openssh-keygen openssl curl --update-cache
       working-directory: ./
-      if: env.build_from_scratch == 'true'
     - uses: actions/checkout@v2
     - name: Install git and update/init submodules
       run: git submodule update --init --recursive
