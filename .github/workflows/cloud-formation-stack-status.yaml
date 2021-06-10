@@ -56,7 +56,7 @@ jobs:
       if: env.BUILD_FROM_SCRATCH == 'false'
       run: |
         pwd && ls -la
-        cd .git_hub
+        cd .github
         pwd && ls -la
         echo 'DISTRIBUTION_ID=$(cat deployed_cloudfront_distribution_id.txt)' >> $GITHUB_ENV
         cat $DISTRIBUTION_ID
