@@ -57,9 +57,9 @@ jobs:
       run: |
         cd .github
         echo 'DISTRIBUTION_ID=$(cat deployed_cloudfront_distribution_id.txt)' >> $GITHUB_ENV
-        cat env.DISTRIBUTION_ID
+        echo $DISTRIBUTION_ID
         echo 'INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*" | jq -r .Invalidation.Id' >> $GITHUB_ENV
-        cat env.INVALIDATION_ID
+        echo $INVALIDATION_ID
         aws cloudfront wait invalidation-completed --distribution-id $DISTRIBUTION_ID --id $INVALIDATION_ID
 
 
@@ -140,7 +140,6 @@ jobs:
         done < $GITHUB_WORKSPACE/site/.env
         echo 'PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")' >> $GITHUB_ENV
         echo $AAD_SSO__REDIRECT_URI
-        echo
     - name: Install docusaurus
       run: |
         cd ./deployment
