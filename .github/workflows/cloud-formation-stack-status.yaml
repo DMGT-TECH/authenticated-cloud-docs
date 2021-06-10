@@ -55,13 +55,12 @@ jobs:
     - name: Invalidate Cloudfront cache
       if: env.BUILD_FROM_SCRATCH == 'false'
       run: |
-        pwd && ls -la
         cd .github
-        pwd && ls -la
         echo 'DISTRIBUTION_ID=$(cat deployed_cloudfront_distribution_id.txt)' >> $GITHUB_ENV
-        cat $DISTRIBUTION_ID
+        cat env.DISTRIBUTION_ID
         echo 'INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*" | jq -r .Invalidation.Id' >> $GITHUB_ENV
-        cat $INVALIDATION_ID
+        cat env.INVALIDATION_ID
+        aws cloudfront wait invalidation-completed --distribution-id $DISTRIBUTION_ID --id $INVALIDATION_ID
 
 
   job_2:
