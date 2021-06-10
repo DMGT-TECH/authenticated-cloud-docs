@@ -52,6 +52,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+    
     - name: Invalidate Cloudfront cache
       if: env.BUILD_FROM_SCRATCH == 'false'
       run: |
@@ -60,7 +61,6 @@ jobs:
         echo $DISTRIBUTION_ID
         echo 'INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*" | jq -r .Invalidation.Id' >> $GITHUB_ENV
         echo $INVALIDATION_ID
-        aws cloudfront wait invalidation-completed --distribution-id $DISTRIBUTION_ID --id $INVALIDATION_ID
 
 
   job_2:
