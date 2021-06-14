@@ -45,14 +45,14 @@ jobs:
         echo "CF_STACK_NAME=${{ env.AAD_SSO__REDIRECT_URI }}"
         npm install
         node index.js
-    
+
     - name: Configure AWS Credentials to Invalidate Cache
       uses: aws-actions/configure-aws-credentials@v1
       with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-    
+
     - name: Invalidate Cloudfront cache
       if: env.BUILD_FROM_SCRATCH == 'false'
       run: |
@@ -214,9 +214,9 @@ jobs:
         aws cloudformation describe-stacks --region us-east-1 --stack-name ${AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}-dev --query "Stacks[0].Outputs[?contains(OutputKey,'DistributionId')].OutputValue" | jq -r ".[]" > deployed_cloudfront_distribution_id.txt
         mv deployed_cloudfront_distribution_id.txt $GITHUB_WORKSPACE/.github/
         git add $GITHUB_WORKSPACE/.github/deployed_cloudfront_distribution_id.txt
-        git commit -m "Committing result of Distribution Id"
+        git commit -m "Committing result of Distribution Id" || true
         git pull
-        git push
+        git push || true  # There may be no changes to the cloudfront ID, but that's not an error
 
     - name: Comment on the PR with the full published domain
       env:
