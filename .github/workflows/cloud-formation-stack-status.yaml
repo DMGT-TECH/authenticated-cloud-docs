@@ -23,6 +23,7 @@ jobs:
         SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: us-east-1
       run: |
+        git submodule update --init --recursive
         pwd && ls -la
         cd site
         pwd && ls -a
