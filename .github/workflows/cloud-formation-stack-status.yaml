@@ -189,8 +189,7 @@ jobs:
         echo "Cloudfront Distribution ID: `cat deployed_cloudfront_distribution_id.txt`"
     - name: Commit files back to branch
       run: |
-        cd ./deployment
-        pwd
+        pwd  # Not from ./deployment subdir as that may belong to another repo (submodule)
         git fetch
         git branch -a
         git checkout main
