@@ -45,6 +45,22 @@ jobs:
         echo "CF_STACK_NAME=${{ env.AAD_SSO__REDIRECT_URI }}"
         npm install
         node index.js
+    
+    - name: Configure AWS Credentials to Invalidate Cache
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+    
+    - name: Invalidate Cloudfront cache
+      if: env.BUILD_FROM_SCRATCH == 'false'
+      run: |
+        cd .github
+        echo 'DISTRIBUTION_ID=$(cat deployed_cloudfront_distribution_id.txt)' >> $GITHUB_ENV
+        echo $DISTRIBUTION_ID
+        echo 'INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*" | jq -r .Invalidation.Id' >> $GITHUB_ENV
+        echo $INVALIDATION_ID
 
 
   job_2:
@@ -124,7 +140,6 @@ jobs:
         done < $GITHUB_WORKSPACE/site/.env
         echo 'PULL_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")' >> $GITHUB_ENV
         echo $AAD_SSO__REDIRECT_URI
-        echo
     - name: Install docusaurus
       run: |
         cd ./deployment
