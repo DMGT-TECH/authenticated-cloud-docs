@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [ main ]
 env:
-  BUILD_FROM_SCRATCH: ${{ secrets.BUILD_FROM_SCRATCH }}
+  FAST_JUST_COPY_FILES: ${{ secrets.FAST_JUST_COPY_FILES }}
 
 jobs:
   job_1:
@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Deploy the site locally and Upload files
-      if: env.BUILD_FROM_SCRATCH == 'false'
+      if: env.FAST_JUST_COPY_FILES == 'true'
       shell: bash
       env:
         ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -54,7 +54,7 @@ jobs:
           aws-region: us-east-1
 
     - name: Invalidate Cloudfront cache
-      if: env.BUILD_FROM_SCRATCH == 'false'
+      if: env.FAST_JUST_COPY_FILES == 'true'
       run: |
         cd .github
         echo 'DISTRIBUTION_ID=$(cat deployed_cloudfront_distribution_id.txt)' >> $GITHUB_ENV
@@ -75,7 +75,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: <-- Cancel CF Status  check and site deployment
-      if: env.BUILD_FROM_SCRATCH == 'false'
+      if: env.FAST_JUST_COPY_FILES == 'true'
       uses: andymckay/cancel-action@0.2
       # run: exit 1
     - name: Import environment variables from .env
@@ -95,7 +95,7 @@ jobs:
         done < "$input"
 
     - name: Check the CF stack status
-      if: env.BUILD_FROM_SCRATCH == 'true'
+      if: env.FAST_JUST_COPY_FILES == 'false' || env.FAST_JUST_COPY_FILES == ''
       id: cfStatus
       env:
         ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -213,6 +213,7 @@ jobs:
         git branch
         aws cloudformation describe-stacks --region us-east-1 --stack-name ${AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}-dev --query "Stacks[0].Outputs[?contains(OutputKey,'DistributionId')].OutputValue" | jq -r ".[]" > deployed_cloudfront_distribution_id.txt
         mv deployed_cloudfront_distribution_id.txt $GITHUB_WORKSPACE/.github/
+        cd $GITHUB_WORKSPACE
         git add $GITHUB_WORKSPACE/.github/deployed_cloudfront_distribution_id.txt
         git commit -m "Committing result of Distribution Id" || true
         git pull
