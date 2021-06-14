@@ -55,15 +55,17 @@ with your secret API key. If you unset this, the search index will not be automa
 
 ## Rendering locally
 
-There is a script `localhost.sh` that takes care of copy the files necessary to run your docusaurus site locally.  In this mode, any changes you make to the content appear instantly on the local version of your site.
+There is a script `localhost.sh` that takes care of copy the files necessary to run your docusaurus site locally.  A browser window will load with the local site preview (or visit http://localhost:3000). When serving locally, any changes you make to the content appear instantly on the local version of your site.
 
 # Configuration
 
-The intent is for all non-secret configuration information, like the base domain/hosted zone information, to be specified in the top level .env file.
+By design, all non-secret configuration information, like the base domain/hosted zone information, to be specified in the top level .env file.  
 
 See the .env file for configurable settings.
 
 The `ALGOLIA_SEARCH_` keys are optional (don't set them if you don't wish to configure Algolia search for your site.)
+
+The goal is to use Github Secrets for confidential information.  (**TODO** Move the site's public key into the .env file.)
 
 ## Required Secrets
 
