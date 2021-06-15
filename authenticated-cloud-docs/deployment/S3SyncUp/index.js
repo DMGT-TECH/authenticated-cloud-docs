@@ -5,8 +5,9 @@ const { getMIMEType } = require('node-mime-types');
 require('dotenv').config();
 const env = process.env;
 var awscred = {
-        accessKeyId: env.ACCESS_KEY_ID,
-        secretAccessKey: env.SECRET_ACCESS_KEY
+        accessKeyId: env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+        region: env.AWS_REGION
     };
 AWS.config.update(awscred);
 
