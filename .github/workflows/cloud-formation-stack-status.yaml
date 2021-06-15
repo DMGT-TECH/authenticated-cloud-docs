@@ -27,6 +27,10 @@ jobs:
         while read line; do
           echo "$line" >> $GITHUB_ENV
         done < $GITHUB_WORKSPACE/site/.env
+        echo "Content of $GITHUB_WORKSPACE/site/.env is:"
+        cat .env
+        echo "Building site."
+
         chmod 777 localbuild.sh
         ./localbuild.sh
         cd authenticated-cloud-docs/deployment/S3SyncUp
