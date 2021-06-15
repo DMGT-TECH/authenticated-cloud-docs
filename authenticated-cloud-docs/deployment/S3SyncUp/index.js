@@ -17,7 +17,9 @@ const s3 = new AWS.S3({
 
 //const sourcePath = '../../../localhost/tmp/build'
 const sourcePath = process.argv[2]
+console.log("S3SyncUp: Source path: " + sourcePath)
 const S3Bucket = env.AAD_SSO__REDIRECT_URI.split('/')[2] + '-website'
+console.log("S3SyncUp: S3 bucket to write to: " + S3Bucket)
 
 // upload file
 const uploadFile = async function uploadFile({ path, params, options } = {}) {
