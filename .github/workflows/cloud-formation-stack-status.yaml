@@ -30,6 +30,8 @@ jobs:
         echo "Content of $GITHUB_WORKSPACE/site/.env is:"
         echo $GITHUB_WORKSPACE
         cat $GITHUB_WORKSPACE/site/.env
+        echo "The current value of $AAD_SSO__REDIRECT_URI, from which bucket name will be derived, is:"
+        echo $AAD_SSO__REDIRECT_URI
         echo "Building site."
 
         chmod 777 localbuild.sh
