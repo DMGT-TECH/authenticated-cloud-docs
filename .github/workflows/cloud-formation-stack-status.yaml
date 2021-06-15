@@ -30,7 +30,7 @@ jobs:
         chmod 777 localbuild.sh
         ./localbuild.sh
         cd authenticated-cloud-docs/deployment/S3SyncUp
-        pwd && ls -la
+        pwd
         touch .env
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
