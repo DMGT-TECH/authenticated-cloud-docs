@@ -58,11 +58,12 @@ jobs:
       if: env.FAST_JUST_COPY_FILES == 'true'
       run: |
         cd .github
-        echo 'DISTRIBUTION_ID=$(cat deployed_cloudfront_distribution_id.txt)' >> $GITHUB_ENV
-        echo $DISTRIBUTION_ID
-        echo 'INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*" | jq -r .Invalidation.Id' >> $GITHUB_ENV
-        echo $INVALIDATION_ID
+        #echo 'DISTRIBUTION_ID=$(cat deployed_cloudfront_distribution_id.txt)' >> $GITHUB_ENV
+        #echo $DISTRIBUTION_ID
+        #echo 'INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*" | jq -r .Invalidation.Id' >> $GITHUB_ENV
+        #echo $INVALIDATION_ID
 
+        aws cloudfront create-invalidation --distribution-id `cat deployed_cloudfront_distribution_id.txt` --paths "/*"
 
   job_2:
     name: Check the current status of the cloud formation stack
