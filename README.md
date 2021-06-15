@@ -1,5 +1,5 @@
 # authenticated-cloud-docs
-A repository that deploys documents to the cloud for secured access via Azure Active Directory.
+A tool in the form or a repository that deploys content to the cloud for secured access via Azure Active Directory.
 
 # Setup
 
@@ -10,15 +10,15 @@ A repository that deploys documents to the cloud for secured access via Azure Ac
 
 ## Simplest Setup (copy/fork this repo)
 
-You can directly fork this repo and use it for your site.  Although this is simplest, you will need to manually pull to keep your repo up to date with any improvements we make.  If you'd like automatic updating see _Recommended Setup_ below.
+You can directly fork this repo and use it for your site.  Although this is simplest, you will need to manually pull to keep your repo up to date with any improvements we make.  If you'd like automatic updating see [Recommended Setup](recommended-setup-install-as-submodule).
 
 1. Clone this repo, choose a domain name for your site.
 1. Set up Active Directory for your new site.
     1. Register a new application. Note your `Application (client) id` and `Directory (tenant) id`.
-    1. Add a **web client** to the application. Note its `Client id` and `Client secret`.
-    1. To the web client, add a **redirect URI** with your domain with `/_callback` at the end.
-1. Edit the configuration in `site/.env` and `site/config/docusaurus.config.json` (you'll need to set your AWS/Route53 information there too.)
-1. Set the required secrets in Github Secrets (see below).
+    1. Under Authentication, add a **web client** with a **redirect URI** with your domain with `/_callback` at the end.
+    1. Under Certificates & Secrets, add a New client secret, and note the `Client secret` **value** (_not the Secret ID in the last column_).
+1. [Configure](#configuration) the site.  This involves editing `site/.env` and possibly `site/config/docusaurus.config.json` (e.g., to set your site's title, etc, or if you want to add or remove Algolia search functionality).
+1. Set the [required secrets](required-secrets) in Github Secrets.
 1. Edit your content in the `site/content` folder
 
 Push everything, including `./.github/workflows/` and your site will be set up and deployed by Github Actions.
@@ -55,15 +55,17 @@ with your secret API key. If you unset this, the search index will not be automa
 
 ## Rendering locally
 
-There is a script `localhost.sh` that takes care of copy the files necessary to run your docusaurus site locally.  In this mode, any changes you make to the content appear instantly on the local version of your site.
+There is a script `localhost.sh` that takes care of copy the files necessary to run your docusaurus site locally.  A browser window will load with the local site preview (or visit http://localhost:3000). When serving locally, any changes you make to the content appear instantly on the local version of your site.
 
 # Configuration
 
-The intent is for all non-secret configuration information, like the base domain/hosted zone information, to be specified in the top level .env file.
+By design, all non-secret configuration information, like the base domain/hosted zone information, to be specified in the top level .env file.  
 
 See the .env file for configurable settings.
 
 The `ALGOLIA_SEARCH_` keys are optional (don't set them if you don't wish to configure Algolia search for your site.)
+
+The goal is to use Github Secrets for confidential information.  (**TODO** Move the site's public key into the .env file.)
 
 ## Required Secrets
 
