@@ -17,7 +17,6 @@ You can directly fork this repo and use it for your site.  Although this is simp
     1. Register a new application. Note your `Application (client) id` and `Directory (tenant) id`.
     1. Add a **web client** to the application. Note its `Client id` and `Client secret`.
     1. To the web client, add a **redirect URI** with your domain with `/_callback` at the end.
-    1. Below the redirects, under **Implicit grant and hybrid flows**, click the checkboxes to ensure Access Tokens and ID tokens are issued by the authorization endpoint.
 1. [Configure](#configuration) the site.  This involves editing `site/.env` and possibly `site/config/docusaurus.config.json` (e.g., to set your site's title, etc, or if you want to add or remove Algolia search functionality).
 1. Set the [required secrets](required-secrets) in Github Secrets.
 1. Edit your content in the `site/content` folder
