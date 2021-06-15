@@ -28,7 +28,8 @@ jobs:
           echo "$line" >> $GITHUB_ENV
         done < $GITHUB_WORKSPACE/site/.env
         echo "Content of $GITHUB_WORKSPACE/site/.env is:"
-        cat .env
+        echo $GITHUB_WORKSPACE
+        cat $GITHUB_WORKSPACE/site/.env
         echo "Building site."
 
         chmod 777 localbuild.sh
