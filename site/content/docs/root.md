@@ -5,7 +5,7 @@ slug: /
 
 Authenticated Cloud Docs is a tool to publish secured content.  This documentation explains how to [edit content](Content%20Editing/ContentEditing) on an existing site, how to [customize](Site%20Customization/SiteCustomization) the appearance of a site, and how to get a site [set up](Site%20Setup/SiteSetup) if you don't have one already.
 
-This site itself is an example of publishing using the tool. Fast publishing test.
+This site itself is an example of publishing using the tool.
 
 Please explore the site content using the Sidebar on the left.
 
