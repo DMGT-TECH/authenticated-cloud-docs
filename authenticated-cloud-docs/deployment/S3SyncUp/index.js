@@ -14,7 +14,8 @@ const s3 = new AWS.S3({
     signatureVersion: 'v4',
   });
 
-const sourcePath = '../../../localhost/tmp/build'
+//const sourcePath = '../../../localhost/tmp/build'
+const sourcePath = process.argv[2]
 const S3Bucket = env.AAD_SSO__REDIRECT_URI.split('/')[2] + '-website'
 
 // upload file

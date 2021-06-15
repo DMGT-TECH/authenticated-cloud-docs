@@ -45,7 +45,7 @@ jobs:
         echo "SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}" >> .env
         echo "CF_STACK_NAME=${{ env.AAD_SSO__REDIRECT_URI }}"
         npm install
-        node index.js
+        node index.js $GITHUB_WORKSPACE/localhost/tmp/build
 
     - name: Configure AWS Credentials to Invalidate Cache
       uses: aws-actions/configure-aws-credentials@v1
