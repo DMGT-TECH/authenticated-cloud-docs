@@ -206,15 +206,15 @@ jobs:
     - name: Commit files back to branch
       run: |
         pwd  # Not from ./deployment subdir as that may belong to another repo (submodule)
+        aws cloudformation describe-stacks --region us-east-1 --stack-name ${AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}-dev --query "Stacks[0].Outputs[?contains(OutputKey,'DistributionId')].OutputValue" | jq -r ".[]" > deployed_cloudfront_distribution_id.txt
+        mv deployed_cloudfront_distribution_id.txt $GITHUB_WORKSPACE/.github/
+        cd $GITHUB_WORKSPACE
         git fetch
         git branch -a
         git checkout main
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git branch
-        aws cloudformation describe-stacks --region us-east-1 --stack-name ${AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}-dev --query "Stacks[0].Outputs[?contains(OutputKey,'DistributionId')].OutputValue" | jq -r ".[]" > deployed_cloudfront_distribution_id.txt
-        mv deployed_cloudfront_distribution_id.txt $GITHUB_WORKSPACE/.github/
-        cd $GITHUB_WORKSPACE
         git add $GITHUB_WORKSPACE/.github/deployed_cloudfront_distribution_id.txt
         git commit -m "Committing result of Distribution Id" || true
         git pull
