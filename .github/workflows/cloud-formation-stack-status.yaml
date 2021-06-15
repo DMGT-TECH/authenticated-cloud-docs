@@ -25,6 +25,7 @@ jobs:
     - name: Build content site locally and upload files
       if: env.FAST_JUST_COPY_FILES == 'true'
       shell: bash
+      run: |
         git submodule update --init --recursive
         echo "Content of $GITHUB_WORKSPACE/site/.env is:"
         echo $GITHUB_WORKSPACE
