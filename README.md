@@ -105,5 +105,5 @@ You can generate these keys by running the last steps of the workflow locally on
 
 ## Alternative Authentication / Identity Providers
 
-The `cloudfront-auth` library supports multiple providers aside from Azure Active Directory, e.g., Auth0.  The parameters passed in from the Github Action can be altered to use those providers instead.
+The `cloudfront-auth` library supports multiple providers aside from Azure Active Directory, e.g., Auth0.  The parameters passed in from the Github Action can be altered to use those providers instead
 
