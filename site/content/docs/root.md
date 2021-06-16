@@ -7,7 +7,7 @@ Authenticated Cloud Docs is a tool to publish secured content.  This documentati
 
 This site itself is an example of publishing using the tool.
 
-Please explore the site content using the Sidebar on the left.
+You can explore the site's content using the Sidebar on the left.
 
 :::note Editing content
 
