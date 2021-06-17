@@ -199,6 +199,7 @@ jobs:
         cat cdk.json
         cat cdk.context.json.template | envsubst > cdk.context.json
         cat cdk.context.json
+        cdk bootstap
         npm run cdk deploy -- --require-approval never
         echo "Published to: `cat published_domain_name.txt`"
         echo "Cloudfront Distribution ID: `cat deployed_cloudfront_distribution_id.txt`"
