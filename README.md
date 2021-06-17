@@ -1,5 +1,5 @@
 # authenticated-cloud-docs
-A tool in the form or a repository that deploys content to the cloud for secured access via Azure Active Directory.
+A tool in the form or a repository that deploys content to the cloud for secured access via Azure Active Directory
 
 # Setup
 
