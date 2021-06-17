@@ -15,6 +15,7 @@ import targets = require('@aws-cdk/aws-route53-targets/lib');
 export interface StaticSiteProps {
   domainName: string;
   siteSubDomain: string;
+  siteBucket: string;
 }
 
 /**
@@ -36,13 +37,17 @@ export class MyStaticWebsite extends Construct {
       bucketName: `${siteDomain}-website`,
       websiteIndexDocument: 'index.html',
       websiteErrorDocument: 'error.html',
-      publicReadAccess: true,
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      publicReadAccess: false,
 
       // The default removal policy is RETAIN, which means that cdk destroy will not attempt to delete
       // the new bucket, and it will remain in your account until manually deleted. By setting the policy to
       // DESTROY, cdk destroy will attempt to delete the bucket, but will error if the bucket is not empty.
       removalPolicy: cdk.RemovalPolicy.DESTROY, // NOT recommended for production code
     });
+
+    
     new cdk.CfnOutput(this, 'Bucket', { value: siteBucket.bucketName });
 
     // TLS certificate
@@ -57,7 +62,7 @@ export class MyStaticWebsite extends Construct {
 
     const authLambda = new lambda.Function(this as any, 'AuthHandler', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      code: lambda.Code.fromAsset("resources/lambda/"+process.env.AAD_SSO__RESULT_NAME+".zip"),
+      code: lambda.Code.fromAsset("resources/lambda/"+ process.env.AAD_SSO__RESULT_NAME+".zip"),
       handler: "index.handler",
       role: new iam.Role(this as any, 'AllowLambdaServiceToAssumeRole', {
         assumedBy: new iam.CompositePrincipal(
@@ -77,9 +82,27 @@ export class MyStaticWebsite extends Construct {
       ])
     });
 
+    // Access identity that we can attach to the bucket to give it access
+    const websiteOriginAccessIdentity = new cloudfront.OriginAccessIdentity(
+        this,
+        "OriginAccessIdentity"
+    );
+  
+    // Grant the access identity access to this bucket
+    siteBucket.grantRead(websiteOriginAccessIdentity)
+
+    // Use this bucket and origin access identity to Cloudfront
+    const websiteBucketOrigin = new origins.S3Origin(
+        props.siteBucket,
+        {
+            originPath: "/",
+            originAccessIdentity: websiteOriginAccessIdentity,
+        }
+  );    
+
     const distribution = new cloudfront.Distribution(this as any, 'SiteDistribution', {
       defaultBehavior: {
-        origin: new origins.S3Origin(siteBucket),
+        origin: websiteBucketOrigin,
         edgeLambdas: [{
           functionVersion: authLambda.currentVersion,
           eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
