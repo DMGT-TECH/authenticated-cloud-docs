@@ -36,7 +36,7 @@ export class MyStaticWebsite extends Construct {
       bucketName: `${siteDomain}-website`,
       websiteIndexDocument: 'index.html',
       websiteErrorDocument: 'error.html',
-      publicReadAccess: false,
+      publicReadAccess: true,
 
       // The default removal policy is RETAIN, which means that cdk destroy will not attempt to delete
       // the new bucket, and it will remain in your account until manually deleted. By setting the policy to
