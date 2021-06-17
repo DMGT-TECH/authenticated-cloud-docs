@@ -20,6 +20,7 @@ export class MyStaticWebsiteStack extends cdk.Stack {
     new MyStaticWebsite(this, id, {
       domainName: this.node.tryGetContext('domain'),
       siteSubDomain: `${process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}`,
+      siteBucket: `${process.env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN}`
     });
   }
 }
