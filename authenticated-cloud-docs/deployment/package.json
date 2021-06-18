@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",
-    "@types/node": "^14.6.0",
+    "@types/node": "^14.17.3",
     "@types/sha256-file": "^1.0.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.2.0",

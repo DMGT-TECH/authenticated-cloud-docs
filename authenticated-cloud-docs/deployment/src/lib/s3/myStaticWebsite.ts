@@ -34,7 +34,7 @@ export class MyStaticWebsite extends Construct {
     // Content bucket
     const siteBucket = new s3.Bucket(this as any, 'SiteBucket', {
       bucketName: `${siteDomain}-website`,
-      websiteIndexDocument: 'index.html',
+      //websiteIndexDocument: 'index.html',
       //websiteErrorDocument: 'error.html',
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       // publicReadAccess: true,
@@ -48,8 +48,9 @@ export class MyStaticWebsite extends Construct {
 
     const oai = new cloudfront.OriginAccessIdentity(this as any, 'OriginAccessIdentity', {
         comment: `${siteDomain}-OAI`,
-      });
-      siteBucket.grantRead(oai);
+    });
+    
+    siteBucket.grantRead(oai);
 
     // TLS certificate
     const certificate = new acm.DnsValidatedCertificate(this as any, 'SiteCertificate', {
@@ -78,7 +79,7 @@ export class MyStaticWebsite extends Construct {
 
     new core.CfnOutput(this, 'MyStaticSiteAuth', {
       value: core.Fn.join(':', [
-        authLambda.functionArn,
+        authLambda.currentVersion.edgeArn,
         // version.version,
       ])
     });
