@@ -36,7 +36,8 @@ export class MyStaticWebsite extends Construct {
       bucketName: `${siteDomain}-website`,
       websiteIndexDocument: 'index.html',
       websiteErrorDocument: 'error.html',
-      publicReadAccess: true,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      // publicReadAccess: true,
 
       // The default removal policy is RETAIN, which means that cdk destroy will not attempt to delete
       // the new bucket, and it will remain in your account until manually deleted. By setting the policy to
@@ -44,6 +45,11 @@ export class MyStaticWebsite extends Construct {
       removalPolicy: cdk.RemovalPolicy.DESTROY, // NOT recommended for production code
     });
     new cdk.CfnOutput(this, 'Bucket', { value: siteBucket.bucketName });
+
+    const oai = new cloudfront.OriginAccessIdentity(this as any, 'OriginAccessIdentity', {
+        comment: `${siteDomain}-OAI`,
+      });
+      siteBucket.grantRead(oai);
 
     // TLS certificate
     const certificate = new acm.DnsValidatedCertificate(this as any, 'SiteCertificate', {
@@ -79,7 +85,7 @@ export class MyStaticWebsite extends Construct {
 
     const distribution = new cloudfront.Distribution(this as any, 'SiteDistribution', {
       defaultBehavior: {
-        origin: new origins.S3Origin(siteBucket),
+        origin: new origins.S3Origin(siteBucket, {originAccessIdentity: oai}),
         edgeLambdas: [{
           functionVersion: authLambda.currentVersion,
           eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
@@ -87,6 +93,7 @@ export class MyStaticWebsite extends Construct {
       },
       certificate,
       domainNames: [siteDomain],
+      defaultRootObject: 'index.html',
     });
     new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
 
