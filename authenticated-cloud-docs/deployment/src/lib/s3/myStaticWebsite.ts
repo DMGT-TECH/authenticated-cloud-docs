@@ -34,8 +34,8 @@ export class MyStaticWebsite extends Construct {
     // Content bucket
     const siteBucket = new s3.Bucket(this as any, 'SiteBucket', {
       bucketName: `${siteDomain}-website`,
-      websiteIndexDocument: 'index.html',
-      websiteErrorDocument: 'error.html',
+      //websiteIndexDocument: 'index.html',
+      //websiteErrorDocument: 'error.html',
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       // publicReadAccess: true,
 
