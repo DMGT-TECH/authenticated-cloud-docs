@@ -85,7 +85,7 @@ export class MyStaticWebsite extends Construct {
 
     const distribution = new cloudfront.Distribution(this as any, 'SiteDistribution', {
       defaultBehavior: {
-        origin: new origins.S3Origin(siteBucket, {originAccessIdentity: oai}),
+        origin: new origins.S3Origin(siteBucket, { originAccessIdentity: oai }),
         edgeLambdas: [{
           functionVersion: authLambda.currentVersion,
           eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
@@ -93,7 +93,7 @@ export class MyStaticWebsite extends Construct {
       },
       certificate,
       domainNames: [siteDomain],
-      //defaultRootObject: 'index.html',
+      defaultRootObject: 'index.html',
     });
     new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
 
@@ -110,6 +110,6 @@ export class MyStaticWebsite extends Construct {
       destinationBucket: siteBucket,
       distribution,
       distributionPaths: ['/*'],
-    } as any);
+    } );
   }
 }
