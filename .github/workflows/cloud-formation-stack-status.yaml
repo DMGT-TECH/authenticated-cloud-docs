@@ -234,3 +234,22 @@ jobs:
           -H "Content-Type: application/json" \
           -H "Authorization: token $GITHUB_TOKEN" \
           --data '{ "body": "The site has been deployed to https://'`cat published_domain_name.txt`'" }'
+
+  job_4: 
+    name: Generate the Changelog and post it to Slack
+    runs-on: ubuntu-latest
+    needs: [job_1]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Generate changelog
+      id: changelog
+      uses: metcalfc/changelog-generator@v1.0.0
+      with:
+        myToken: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Get the changelog
+      run: echo "${{ steps.changelog.outputs.changelog }}"
+
+
+
+
