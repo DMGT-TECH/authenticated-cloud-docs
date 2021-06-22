@@ -238,15 +238,13 @@ jobs:
   job_4: 
     name: Generate the Changelog and post it to Slack
     runs-on: ubuntu-latest
-    env: 
-      GITHUB_TOKEN: ${{ secrets.PAT }}
     steps:
     - uses: actions/checkout@v2
     - name: Generate changelog
       id: release
       uses: metcalfc/changelog-generator@main
       with:
-        myToken: $GITHUB_TOKEN
+        myToken: ${{ secrets.PAT }}
     
     - name: Get the changelog
       run: echo "${{ steps.changelog.outputs.changelog }}"
