@@ -238,7 +238,6 @@ jobs:
   job_4: 
     name: Generate the Changelog and post it to Slack
     runs-on: ubuntu-latest
-    needs: [job_1]
     env: 
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
