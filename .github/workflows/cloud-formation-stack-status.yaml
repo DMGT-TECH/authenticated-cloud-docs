@@ -245,7 +245,7 @@ jobs:
       id: changelog
       uses: metcalfc/changelog-generator@v1.0.0
       with:
-        myToken: ${{ secrets.GITHUB_TOKEN }}
+        myToken: ${{ secrets.PAT }}
     
     - name: Get the changelog
       run: echo "${{ steps.changelog.outputs.changelog }}"
