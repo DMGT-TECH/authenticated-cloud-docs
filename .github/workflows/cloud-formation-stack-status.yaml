@@ -241,8 +241,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Generate changelog
-      id: release
-      uses: metcalfc/changelog-generator@v1.0.0
+      id: changelog
+      uses: etcdigital/pull-request-changelog@master
       with:
         myToken: ${{ secrets.GITHUB_TOKEN }}
         
