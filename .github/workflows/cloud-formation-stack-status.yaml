@@ -240,7 +240,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build the site locally and update Algolia search index
+    - name: Build and run the site locally
       shell: bash
       run: |
         mkdir -p localhost
@@ -259,7 +259,9 @@ jobs:
         rm -rf sidebars.js docs src static  
         ln -s ../../site/content/* .  
         sudo npm run start -- --port 80
-        cd ../..
+    - name: Update Algolia Search Index
+      shell: bash
+      run: |
         pwd && ls -la
         set -a
         source ./site/.env
