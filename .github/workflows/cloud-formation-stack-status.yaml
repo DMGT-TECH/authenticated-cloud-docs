@@ -240,7 +240,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build and run the site locally
+    - name: Run the site locally and update the search index
       shell: bash
       run: |
         mkdir -p localhost
@@ -258,10 +258,8 @@ jobs:
         cd ./tmp
         rm -rf sidebars.js docs src static  
         ln -s ../../site/content/* .  
-        sudo npm run start -- --port 80
-    - name: Update Algolia Search Index
-      shell: bash
-      run: |
+        sudo npm run start -- --port 80 &
+        cd ../..
         pwd && ls -la
         set -a
         source ./site/.env
@@ -269,6 +267,5 @@ jobs:
         cat ./site/config/algolia/algolia_search.env.template | envsubst  > ./algolia_search.env
         cat ./site/config/algolia/algolia_search_config.json.template | envsubst > ./algolia_search_config.json 
         docker run -it --env-file=./algolia_search.env -e "CONFIG=$(cat ./algolia_search_config.json | jq -r tostring)" algolia/docsearch-scraper
-
 
 
