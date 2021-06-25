@@ -259,6 +259,7 @@ jobs:
         rm -rf sidebars.js docs src static  
         ln -s ../../site/content/* .  
         sudo npm run start -- --port 80 &
+        sudo lsof -i:80
         cd ../..
         pwd && ls -la
         set -a
