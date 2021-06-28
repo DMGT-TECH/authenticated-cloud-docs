@@ -94,7 +94,7 @@ export class MyStaticWebsite extends Construct {
       },
       certificate,
       domainNames: [siteDomain],
-      defaultRootObject: 'index.html',
+      //defaultRootObject: 'index.html',
     });
     new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
 
