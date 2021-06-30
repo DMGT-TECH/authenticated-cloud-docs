@@ -10,8 +10,7 @@ import s3 = require('@aws-cdk/aws-s3');
 import s3deploy = require('@aws-cdk/aws-s3-deployment');
 import acm = require('@aws-cdk/aws-certificatemanager');
 import cdk = require('@aws-cdk/core');
-import targets = require('@aws-cdk/aws-route53-targets/lib');
-import lambdaEventsource = require('@aws-cdk/aws-lambda-event-sources');
+import targets = require('@aws-cdk/aws-route53-targets/lib');s
 
 export interface StaticSiteProps {
   domainName: string;
