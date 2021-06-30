@@ -34,10 +34,7 @@ export class MyStaticWebsite extends Construct {
     // Content bucket
     const siteBucket = new s3.Bucket(this as any, 'SiteBucket', {
       bucketName: `${siteDomain}-website`,
-      websiteIndexDocument: 'index.html',
-      websiteErrorDocument: 'error.html',
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-      // publicReadAccess: true,
 
       // The default removal policy is RETAIN, which means that cdk destroy will not attempt to delete
       // the new bucket, and it will remain in your account until manually deleted. By setting the policy to
