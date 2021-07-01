@@ -8,18 +8,14 @@ exports.handler = (event, context, callback) => {
     
     
     let olduri = request.uri;
-    let newuri
+    let newuri = olduri
+
     if(olduri.endsWith('/')) {
         newuri = olduri.replace(/\/$/, '\/index.html');
-    } else{
-        newuri = olduri
+    } else if(! olduri.split("/").pop().includes(".")){
+        newuri = olduri + "/index.html"
     }
-    /*else if( olduri.substr(-1) !== "/") {
-        var newuri = olduri + '\/index.html'
-        console.info("redirection worked")
-    }*/
-   
-    
+
     // Log the URI as received by CloudFront and the new URI to be used to fetch from origin
     console.log("Old URI is: " + olduri);
     console.log("New URI is: " + newuri);
