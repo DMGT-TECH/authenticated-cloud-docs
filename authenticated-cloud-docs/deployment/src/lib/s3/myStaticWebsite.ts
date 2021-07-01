@@ -130,14 +130,14 @@ export class MyStaticWebsite extends Construct {
             {
                 functionVersion: authLambda.currentVersion,
                 eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
+            },
+            {
+                eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+                functionVersion: s3RedirectLambda.currentVersion,
+    
             }
         
-        ],
-        lambdaFunctionAssociations: [{
-            eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-            lambdaFunction: s3LambdaVersion,
-
-        }]
+        ]
       },
         certificate,
         domainNames: [siteDomain],
