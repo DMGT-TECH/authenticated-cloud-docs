@@ -187,7 +187,9 @@ jobs:
         cp cloudfront-auth/distributions/$AAD_SSO__RESULT_NAME/$AAD_SSO__RESULT_NAME.zip resources/lambda/
         cd resources/lambda
         pwd && ls -la 
-        
+        unzip $AAD_SSO__RESULT_NAME.zip
+        cd $AAD_SSO__RESULT_NAME
+        pwd && ls -la
     - name: Build the CDK App
       run: cd deployment; npm i && npm run build
     - name: <-- Cancel (red X) if deploy is already in progress (test3a)
