@@ -101,6 +101,10 @@ export class MyStaticWebsite extends Construct {
 
     });
 
+    const s3LambdaVersion = new lambda.Version(this as any, 'RedirectHandler', { 
+        lambda: s3RedirectLambda
+    })
+
     
 
     // const version = authLambda.addVersion(':sha256:' + sha256('./resources/lambda/auth.js'));
@@ -112,6 +116,13 @@ export class MyStaticWebsite extends Construct {
       ])
     });
 
+    new core.CfnOutput(this, 'MyRedirector', {
+        value: core.Fn.join(':', [
+            s3RedirectLambda.currentVersion.edgeArn
+        ])
+      });
+    
+
     const distribution = new cloudfront.Distribution(this as any, 'SiteDistribution', {
       defaultBehavior: {
         origin: new origins.S3Origin(siteBucket, { originAccessIdentity: oai }),
@@ -119,18 +130,20 @@ export class MyStaticWebsite extends Construct {
             {
                 functionVersion: authLambda.currentVersion,
                 eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
-            },
-
-            {
-                functionVersion: s3RedirectLambda.currentVersion,
-                eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
             }
         
         ],
       },
-      certificate,
-      domainNames: [siteDomain],
-      defaultRootObject: 'index.html',
+      defaultCacheBehavior: {
+            lambdaFunctionAssociations: [{
+                eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+                lambdaFunction: s3LambdaVersion,
+
+            }]
+        },
+        certificate,
+        domainNames: [siteDomain],
+        defaultRootObject: 'index.html',
     });
     new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
 
