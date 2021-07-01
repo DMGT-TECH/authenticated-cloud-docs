@@ -188,7 +188,7 @@ jobs:
     - name: Prepare Lambda Edge function zip to deployment dir
       run: |
         cd ./deployment/src/
-        zip -r redirectLambda.zip redirectLambda
+        zip -j redirectLambda.zip redirectLambda/*
         cd ..
         cp src/redirectLambda.zip resources/lambda/
 
