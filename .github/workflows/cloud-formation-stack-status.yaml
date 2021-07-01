@@ -190,7 +190,8 @@ jobs:
         cd ./deployment/src/
         zip -r redirectLambda.zip redirectLambda
         cd ..
-        cp src/redirectLambda.zip resources/redirectLambda
+        mkdir -p resources/redirectLambda
+        cp src/redirectLambda.zip resources/redirectLambda/
 
     - name: Build the CDK App
       run: cd deployment; npm i && npm run build
