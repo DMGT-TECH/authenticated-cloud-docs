@@ -2,18 +2,22 @@
 exports.handler = (event, context, callback) => {
     
     // Extract the request from the CloudFront event that is sent to Lambda@Edge 
-    var request = event.Records[0].cf.request;
+    let request = event.Records[0].cf.request;
     console.log("Test Request is: "+ request)
     // Extract the URI from the request
     
     
-    var olduri = request.uri;
+    let olduri = request.uri;
+    let newuri
     if(olduri.endsWith('/')) {
-        var newuri = olduri.replace(/\/$/, '\/index.html');
-    } else if( olduri.substr(-1) !== "/") {
+        newuri = olduri.replace(/\/$/, '\/index.html');
+    } else{
+        newuri = olduri
+    }
+    /*else if( olduri.substr(-1) !== "/") {
         var newuri = olduri + '\/index.html'
         console.info("redirection worked")
-    }
+    }*/
    
     
     // Log the URI as received by CloudFront and the new URI to be used to fetch from origin
