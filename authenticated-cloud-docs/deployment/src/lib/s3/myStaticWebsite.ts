@@ -82,7 +82,8 @@ export class MyStaticWebsite extends Construct {
           actions: [
             "logs:CreateLogStream",
             "logs:PutLogEvents",
-            "logs:CreateLogGroup"
+            "logs:CreateLogGroup",
+             "lambda:InvokeFunction"
           ]
     })
     let roleName = props.siteSubDomain + "S3Redirect"
@@ -125,12 +126,12 @@ export class MyStaticWebsite extends Construct {
             {
                 functionVersion: authLambda.currentVersion,
                 eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
-            }/*,
+            },
             {
-                eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
+                eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
                 functionVersion: s3RedirectLambda.currentVersion,
     
-            }*/
+            }
         
         ]
       },
