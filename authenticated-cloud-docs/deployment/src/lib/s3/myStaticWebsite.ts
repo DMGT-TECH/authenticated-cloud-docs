@@ -97,7 +97,7 @@ export class MyStaticWebsite extends Construct {
         handler: "index.handler",
         role: s3RedirectLambdaRole,
         memorySize: 512,
-        timeout: cdk.Duration.seconds(600)
+        timeout: cdk.Duration.seconds(30)
 
     });
 
