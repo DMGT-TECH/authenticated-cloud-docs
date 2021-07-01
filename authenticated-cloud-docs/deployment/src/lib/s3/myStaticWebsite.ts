@@ -121,10 +121,10 @@ export class MyStaticWebsite extends Construct {
                 eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
             },
 
-            {
+            /*{
                 functionVersion: s3RedirectLambda.currentVersion,
                 eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-            }
+            }*/
         
         ],
       },
