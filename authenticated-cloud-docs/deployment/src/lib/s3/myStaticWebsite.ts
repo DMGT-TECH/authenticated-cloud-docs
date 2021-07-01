@@ -91,15 +91,15 @@ export class MyStaticWebsite extends Construct {
 
     // Deploy Lambda to perform redirections
 
-    /*const s3RedirectLambda = new lambda.Function(this as any, 'RedirectHandler', { 
+    const s3RedirectLambda = new lambda.Function(this as any, 'RedirectHandler', { 
         runtime: lambda.Runtime.NODEJS_12_X,
-        code: lambda.Code.fromAsset("lambda/"),
+        code: lambda.Code.fromAsset("redirectLambda/"),
         handler: "index.handler",
         role: s3RedirectLambdaRole,
         memorySize: 512,
         timeout: cdk.Duration.seconds(600)
 
-    });*/
+    });
 
     
 
