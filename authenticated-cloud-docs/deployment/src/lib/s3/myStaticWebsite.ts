@@ -101,11 +101,6 @@ export class MyStaticWebsite extends Construct {
 
     });
 
-    const s3LambdaVersion = new lambda.Version(this as any, 'RedirectHandler', { 
-        lambda: s3RedirectLambda
-    })
-
-    
 
     // const version = authLambda.addVersion(':sha256:' + sha256('./resources/lambda/auth.js'));
 
