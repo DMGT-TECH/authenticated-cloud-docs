@@ -83,7 +83,6 @@ export class MyStaticWebsite extends Construct {
             "logs:CreateLogStream",
             "logs:PutLogEvents",
             "logs:CreateLogGroup",
-             "lambda:InvokeFunction"
           ]
     })
     let roleName = props.siteSubDomain + "S3Redirect"
