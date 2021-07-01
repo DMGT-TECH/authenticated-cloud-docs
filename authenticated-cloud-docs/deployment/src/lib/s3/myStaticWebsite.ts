@@ -93,7 +93,7 @@ export class MyStaticWebsite extends Construct {
 
     const s3RedirectLambda = new lambda.Function(this as any, 'RedirectHandler', { 
         runtime: lambda.Runtime.NODEJS_12_X,
-        code: lambda.Code.fromAsset("resources/redirectLambda/redirectLambda.zip"),
+        code: lambda.Code.fromAsset("resources/lambda/redirectLambda.zip"),
         handler: "index.handler",
         role: s3RedirectLambdaRole,
         memorySize: 512,
