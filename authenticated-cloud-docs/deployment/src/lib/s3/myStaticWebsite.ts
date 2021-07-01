@@ -133,14 +133,12 @@ export class MyStaticWebsite extends Construct {
             }
         
         ],
-      },
-      defaultCacheBehavior: {
-            lambdaFunctionAssociations: [{
-                eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-                lambdaFunction: s3LambdaVersion,
+        lambdaFunctionAssociations: [{
+            eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+            lambdaFunction: s3LambdaVersion,
 
-            }]
-        },
+        }]
+      },
         certificate,
         domainNames: [siteDomain],
         defaultRootObject: 'index.html',
