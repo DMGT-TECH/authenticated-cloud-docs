@@ -85,7 +85,7 @@ export class MyStaticWebsite extends Construct {
             "logs:CreateLogGroup"
           ]
     })
-    let roleName = siteBucket + "S3Redirect"
+    let roleName = props.siteSubDomain + "S3Redirect"
     let s3RedirectLambdaRole = new iam.Role(this, roleName, { assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com")} )
     s3RedirectLambdaRole.addToPolicy(s3RedirectLambdaPolicy)
 
