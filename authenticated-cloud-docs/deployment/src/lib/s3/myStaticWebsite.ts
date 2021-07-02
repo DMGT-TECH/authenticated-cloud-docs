@@ -72,6 +72,36 @@ export class MyStaticWebsite extends Construct {
       }),
     });
 
+    // S3 Redirection lambda policy
+
+    let s3RedirectLambdaPolicy = new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        resources: [
+            "arn:aws:logs:*:*:*",
+          ],
+          actions: [
+            "logs:CreateLogStream",
+            "logs:PutLogEvents",
+            "logs:CreateLogGroup",
+          ]
+    })
+    let roleName = props.siteSubDomain + "S3Redirect"
+    let s3RedirectLambdaRole = new iam.Role(this, roleName, { assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com")} )
+    s3RedirectLambdaRole.addToPolicy(s3RedirectLambdaPolicy)
+
+    // Deploy Lambda to perform redirections
+
+    const s3RedirectLambda = new lambda.Function(this as any, 'RedirectHandler', { 
+        runtime: lambda.Runtime.NODEJS_12_X,
+        code: lambda.Code.fromAsset("resources/lambda/redirectLambda.zip"),
+        handler: "index.handler",
+        role: s3RedirectLambdaRole,
+        memorySize: 512,
+        timeout: cdk.Duration.seconds(30)
+
+    });
+
+
     // const version = authLambda.addVersion(':sha256:' + sha256('./resources/lambda/auth.js'));
 
     new core.CfnOutput(this, 'MyStaticSiteAuth', {
@@ -81,17 +111,32 @@ export class MyStaticWebsite extends Construct {
       ])
     });
 
+    new core.CfnOutput(this, 'MyRedirector', {
+        value: core.Fn.join(':', [
+            s3RedirectLambda.currentVersion.edgeArn
+        ])
+      });
+    
+
     const distribution = new cloudfront.Distribution(this as any, 'SiteDistribution', {
       defaultBehavior: {
         origin: new origins.S3Origin(siteBucket, { originAccessIdentity: oai }),
-        edgeLambdas: [{
-          functionVersion: authLambda.currentVersion,
-          eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
-        }],
+        edgeLambdas: [
+            {
+                functionVersion: authLambda.currentVersion,
+                eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
+            },
+            {
+                eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+                functionVersion: s3RedirectLambda.currentVersion,
+    
+            }
+        
+        ]
       },
-      certificate,
-      domainNames: [siteDomain],
-      defaultRootObject: 'index.html',
+        certificate,
+        domainNames: [siteDomain],
+        defaultRootObject: 'index.html',
     });
     new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
 
@@ -102,6 +147,7 @@ export class MyStaticWebsite extends Construct {
       zone
     });
 
+    
     // Deploy site contents to S3 bucket
     new s3deploy.BucketDeployment(this as any, 'DeployWithInvalidation', {
       sources: [ s3deploy.Source.asset('tmp/build') ],
