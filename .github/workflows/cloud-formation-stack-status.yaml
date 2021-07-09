@@ -242,3 +242,39 @@ jobs:
           -H "Content-Type: application/json" \
           -H "Authorization: token $GITHUB_TOKEN" \
           --data '{ "body": "The site has been deployed to https://'`cat published_domain_name.txt`'" }'
+
+  job_4: 
+    name: Update Algolia Search Index
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run the site locally and update the search index
+      shell: bash
+      run: |
+        mkdir -p localhost
+        cd localhost
+        if [[ -d "tmp" ]]; then
+          echo "tmp docusaurus install already exists, not installing."
+        else
+          npx @docusaurus/init@latest init tmp classic
+        fi
+        set -a
+        source ../site/.env
+        set +a  
+        cat ../site/config/docusaurus/docusaurus.config.js.template | envsubst > ./tmp/docusaurus.config.js
+        cp -r ../authenticated-cloud-docs/dmgt-symlinks-plugin ./tmp
+        cd ./tmp
+        rm -rf sidebars.js docs src static  
+        ln -s ../../site/content/* .  
+        BROWSER=none sudo npm run start -- --port 80 | cat - &
+        sudo lsof -i:80
+        cd ../..
+        pwd && ls -la
+        set -a
+        source ./site/.env
+        set +a
+        cat ./site/config/algolia/algolia_search.env.template | envsubst  > ./algolia_search.env
+        cat ./site/config/algolia/algolia_search_config.json.template | envsubst > ./algolia_search_config.json 
+        docker run -it --env-file=./algolia_search.env -e "CONFIG=$(cat ./algolia_search_config.json | jq -r tostring)" algolia/docsearch-scraper
+
+
