@@ -5,6 +5,8 @@ A tool in the form or a repository that deploys content to the cloud for secured
 
 ## Prerequisites
 
+This tool uses Azure for authentication and AWS to store and serve the content.
+
 * Azure: You need to register and configure an Azure Active Directory application+client for your site.
 * AWS: You need control over a hosted zone in Route53, and the ability to create S3 buckets (AWS access key and secret).
 
