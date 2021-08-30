@@ -42,7 +42,7 @@ jobs:
         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
         echo "AWS_REGION=us-east-1" >> .env
-        npm install
+        npm ci
         node index.js $GITHUB_WORKSPACE/localhost/tmp/build
 
     - name: Configure AWS Credentials to Invalidate Cache
@@ -108,7 +108,7 @@ jobs:
         echo "SECRET_ACCESS_KEY=${{ secrets.SECRET_ACCESS_KEY }}" >> .env
         echo "AWS_REGION=us-east-1" >> .env
         echo "CF_STACK_NAME=${{ env.AUTHENTICATED_CLOUD_DOCS__HOSTED_ZONE_SUBDOMAIN }}-dev"
-        npm install
+        npm ci
         npm start
         echo "::set-output name=envvar::$(npm start)"
 
@@ -193,7 +193,7 @@ jobs:
         cp src/redirectLambda.zip resources/lambda/
 
     - name: Build the CDK App
-      run: cd deployment; npm i && npm run build
+      run: cd deployment; npm ci && npm run build
     - name: <-- Cancel (red X) if deploy is already in progress (test3a)
       if: ${{ contains(needs.job_1.outputs.envvar, 'IN_PROGRESS') }}
       run: exit 1
